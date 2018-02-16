@@ -39,7 +39,7 @@ class FavouriteQuestion(Question):
         # bit long
         instances = [r.arguments[0] for r in relations if r.type == 'is_a' and r.arguments[1] == category]
         ox_likes = [r for r in relations if r.type == 'likes' and r.arguments[0] == self.ox and r.arguments[1] in instances]
-        if len ox_likes == 0:
+        if len(ox_likes) == 0:
             return None
         biggest_like = ox_likes[0]
         for like in ox_likes[1:]:
