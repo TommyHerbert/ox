@@ -1,4 +1,5 @@
 from functools import partial
+from category import Category
 
 
 class Expectation:
@@ -6,9 +7,9 @@ class Expectation:
         self.content = content
 
 
-class Question:
+class Question(Category):
     def __init__(self):
-        pass
+        Category.__init__(self)
 
     def get_logical_form(self, input_string, reader):
         return Expectation(self.get_question_logic(input_string, reader))
