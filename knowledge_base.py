@@ -1,6 +1,7 @@
 from question import FavouriteQuestion
 from relation import Relation
 from song import Song, Hello
+from singer import Singer, Adele
 
 
 class KnowledgeBase:
@@ -9,10 +10,20 @@ class KnowledgeBase:
         self.categories = []
         self.things = []
         self.relations = []
-        self.categories.append(FavouriteQuestion(self.ox))
+
+        singer = Singer()
+        adele = Adele()
         song = Song()
-        self.categories.append(song)
         hello = Hello()
+
+        self.categories.append(FavouriteQuestion(self.ox))
+        self.categories.append(singer)
+        self.categories.append(song)
+
         self.things.append(hello)
+        self.things.append(adele)
+
         self.relations.append(Relation('is_a', (hello, song)))
+        self.relations.append(Relation('is_a', (adele, singer)))
+        self.relations.append(Relation('sang', (adele, hello)))
         self.relations.append(Relation('likes', (self.ox, hello, 1000)))

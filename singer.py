@@ -1,12 +1,12 @@
 from category import Category
 
 
-class Song(Category):
+class Singer(Category):
     def __init__(self):
         Category.__init__(self)
-        self.lexical_form = 'song'
+        self.lexical_form = 'singer'
 
 
-class Hello:
+class Adele:
     def __init__(self):
-        self.lexical_form = 'Hello'
+        self.lexical_form = 'Adele'
