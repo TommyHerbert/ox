@@ -1,6 +1,14 @@
 class Reader:
-    def __init__(self):
-        pass
+    def __init__(self, knowledge_base):
+        self.knowledge_base = knowledge_base
 
-    def read(self, interlocutor_utterance, conversation):
-        pass
+    def read(self, utterance, conversation):
+        conversation.moves.append(utterance)
+        conversation.context.append(self.parse(utterance))
+
+    def parse(self, utterance):
+        for category in self.knowledge_base.categories:
+            logical_form = category.get_logical_form(utterance, self)
+            if logical_form:
+                return logical_form
+        return None
