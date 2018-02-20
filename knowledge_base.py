@@ -1,5 +1,6 @@
 from question import FavouriteQuestion
 
+
 class KnowledgeBase:
     def __init__(self, ox):
         self.ox = ox
