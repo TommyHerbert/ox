@@ -1,6 +1,6 @@
 from conversation import Conversation
 from reader import Reader
-from knowledge_base import KnowledgeBase
+from knowledge.knowledge_base import KnowledgeBase
 
 
 class Ox:
