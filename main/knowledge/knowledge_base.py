@@ -2,6 +2,7 @@ from question import FavouriteQuestion
 from relation import Relation
 from song import Song, Hello
 from singer import Singer, Adele
+from compound_noun import CompoundNoun
 
 
 class KnowledgeBase:
@@ -15,10 +16,12 @@ class KnowledgeBase:
         adele = Adele()
         song = Song()
         hello = Hello()
+        compound_noun = CompoundNoun()
 
         self.categories.append(FavouriteQuestion(self.ox))
         self.categories.append(singer)
         self.categories.append(song)
+        self.categories.append(compound_noun)
 
         self.things.append(hello)
         self.things.append(adele)

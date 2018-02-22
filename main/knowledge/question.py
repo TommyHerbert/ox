@@ -12,7 +12,8 @@ class Question(Category):
         Category.__init__(self)
 
     def get_logical_form(self, input_string, reader):
-        return Expectation(self.get_question_logic(input_string, reader))
+        question_logic = self.get_question_logic(input_string, reader)
+        return Expectation(question_logic) if question_logic else None
 
     def get_question_logic(self, input_string, reader):
         return None
@@ -44,9 +45,11 @@ class FavouriteQuestion(Question):
     def find_favourite(self, reader, category):
         relations = reader.get_relations()
         # bit long
-        instances = [r.arguments[0] for r in relations if r.type == 'is_a' and r.arguments[1] == category]
-        ox_likes = \
-            [r for r in relations if r.type == 'likes' and r.arguments[0] == self.ox and r.arguments[1] in instances]
+        instances = [r.arguments[0] for r in relations if r.relation_type == 'is_a' and r.arguments[1] == category]
+        ox_likes = []
+        for r in relations:
+            if r.relation_type == 'likes' and r.arguments[0] == self.ox and r.arguments[1] in instances:
+                ox_likes.append(r)
         if len(ox_likes) == 0:
             return None
         biggest_like = ox_likes[0]

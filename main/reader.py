@@ -12,3 +12,6 @@ class Reader:
             if logical_form:
                 return logical_form
         return None
+
+    def get_relations(self):
+        return self.knowledge_base.relations
