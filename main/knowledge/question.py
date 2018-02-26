@@ -1,10 +1,6 @@
 from functools import partial
 from category import Category
-
-
-class Expectation:
-    def __init__(self, content):
-        self.content = content
+from context import Expectation
 
 
 class Question(Category):
