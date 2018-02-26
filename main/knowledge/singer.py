@@ -1,4 +1,4 @@
-from category import Category
+from concept import Category, Thing
 
 
 class Singer(Category):
@@ -7,6 +7,7 @@ class Singer(Category):
         self.lexical_form = 'singer'
 
 
-class Adele:
+class Adele(Thing):
     def __init__(self):
+        Thing.__init__(self)
         self.lexical_form = 'Adele'

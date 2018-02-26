@@ -3,10 +3,12 @@ from reader import Reader
 from knowledge.knowledge_base import KnowledgeBase
 from reasoner import Reasoner
 from speaker import Speaker
+from knowledge.concept import Thing
 
 
-class Ox:
+class Ox(Thing):
     def __init__(self):
+        Thing.__init__(self)
         self.goal = 'do good by teaching'
         self.knowledge_base = KnowledgeBase(self)
         self.conversation = Conversation()
@@ -14,6 +16,7 @@ class Ox:
         self.reader = Reader(self.knowledge_base)
         self.reasoner = Reasoner()
         self.speaker = Speaker()
+        self.lexical_form = 'Ox'
 
     def tell(self, interlocutor_utterance):
         self.reader.read(interlocutor_utterance, self.conversation)

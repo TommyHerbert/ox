@@ -31,6 +31,9 @@ class CompoundNoun:
     @staticmethod
     def has_lexical_form(relation, lexical_form):
         for argument in relation.arguments:
-            if argument.get_lexical_form() == lexical_form:
-                return True
+            try:
+                if argument.get_lexical_form() == lexical_form:
+                    return True
+            except AttributeError:
+                return False
         return False

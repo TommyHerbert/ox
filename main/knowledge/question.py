@@ -1,5 +1,5 @@
 from functools import partial
-from category import Category
+from concept import Category
 from context import Expectation
 from main.logical_tree import LogicalTreeBranch
 
@@ -41,11 +41,15 @@ class FavouriteQuestion(Question):
 
     def find_favourite(self, reader, category):
         relations = reader.get_relations()
-        # bit long
-        instances = [r.arguments[0] for r in relations if r.relation_type == 'is_a' and r.arguments[1] == category]
+        instances = category
+        if type(instances) != list:
+            instances = [r.arguments[0] for r in relations if r.relation_type == 'is_a' and r.arguments[1] == category]
+        return self.find_favourite_in_list(relations, instances)
+
+    def find_favourite_in_list(self, relations, candidates):
         ox_likes = []
         for r in relations:
-            if r.relation_type == 'likes' and r.arguments[0] == self.ox and r.arguments[1] in instances:
+            if r.relation_type == 'likes' and r.arguments[0] == self.ox and r.arguments[1] in candidates:
                 ox_likes.append(r)
         if len(ox_likes) == 0:
             return None
