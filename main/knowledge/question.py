@@ -1,6 +1,7 @@
 from functools import partial
 from category import Category
 from context import Expectation
+from main.logical_tree import LogicalTreeBranch
 
 
 class Question(Category):
@@ -25,7 +26,7 @@ class FavouriteQuestion(Question):
         if not category_string:
             return None
         category = reader.parse(category_string)
-        return partial(self.find_favourite, reader), [category]
+        return LogicalTreeBranch(partial(self.find_favourite, reader), [category])
 
     @staticmethod
     def get_category_string(input_string):

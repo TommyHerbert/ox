@@ -1,4 +1,5 @@
 from functools import partial
+from main.logical_tree import LogicalTreeBranch
 
 
 class CompoundNoun:
@@ -10,7 +11,7 @@ class CompoundNoun:
         if len(words) != 2:
             return None
         category = reader.parse(words[1])
-        return partial(self.find_referents, words[0], reader), [category]
+        return LogicalTreeBranch(partial(self.find_referents, words[0], reader), [category])
 
     def find_referents(self, qualifier_string, reader, category):
         relations = reader.get_relations()
