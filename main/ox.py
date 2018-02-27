@@ -22,4 +22,4 @@ class Ox(Thing):
         self.reader.read(interlocutor_utterance, self.conversation)
         next_move = self.strategy.pop_move(self.conversation.context)
         answer_concept = self.reasoner.take_move(next_move)
-        self.speaker.utter(answer_concept)
+        return self.speaker.utter(answer_concept)

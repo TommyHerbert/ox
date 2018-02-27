@@ -4,4 +4,4 @@ class Speaker:
 
     @staticmethod
     def utter(concept):
-        print concept.lexical_form
+        return concept.lexical_form
