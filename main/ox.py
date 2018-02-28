@@ -1,23 +1,29 @@
+from knowledge.concept import Thing
+from knowledge.knowledge_base import KnowledgeBase
 from conversation import Conversation, NaiveConversationStrategy
 from reader import Reader
-from knowledge.knowledge_base import KnowledgeBase
 from reasoner import Reasoner
 from speaker import Speaker
-from knowledge.concept import Thing
 
 
 class Ox(Thing):
     def __init__(self):
         Thing.__init__(self)
+        self.lexical_form = 'Ox'
+
+        # Nothing is using this yet, and anyway Ox can't yet understand
+        # it. But it seems like a way to set out our stall.
         self.goal = 'do good by teaching'
+
         self.knowledge_base = KnowledgeBase(self)
         self.conversation = Conversation()
-        self.strategy = NaiveConversationStrategy
+        self.strategy = NaiveConversationStrategy()
         self.reader = Reader(self.knowledge_base)
         self.reasoner = Reasoner()
         self.speaker = Speaker()
-        self.lexical_form = 'Ox'
 
+    # Say something to Ox. Ox will update its model of the conversation
+    # and then say something back.
     def tell(self, interlocutor_utterance):
         self.reader.read(interlocutor_utterance, self.conversation)
         next_move = self.strategy.pop_move(self.conversation.context)
