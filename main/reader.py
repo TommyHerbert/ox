@@ -4,7 +4,9 @@ class Reader:
 
     def read(self, utterance, conversation):
         conversation.moves.append(utterance)
-        conversation.context.append(self.parse(utterance))
+        logical_form = self.parse(utterance)
+        if logical_form:
+            conversation.context.append(logical_form)
 
     def parse(self, utterance):
         for category in self.knowledge_base.categories:
