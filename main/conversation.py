@@ -1,3 +1,6 @@
+from knowledge.didnt_understand import DidntUnderstand
+
+
 class Conversation:
     def __init__(self):
         self.moves = []
@@ -15,4 +18,4 @@ class NaiveConversationStrategy:
             if element.is_expectation():
                 del context[i]
                 return element.content
-        return None
+        return DidntUnderstand().get_logical_form()

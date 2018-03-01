@@ -11,7 +11,7 @@ class CompoundNoun:
         if len(words) != 2:
             return None
         category = reader.parse(words[1])
-        return LogicalTreeBranch(partial(self.find_referents, words[0], reader), [category])
+        return LogicalTreeBranch(partial(self.find_referents, words[0], reader), [category]) if category else None
 
     def find_referents(self, qualifier_string, reader, category):
         relations = reader.get_relations()
