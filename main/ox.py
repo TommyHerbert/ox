@@ -1,9 +1,9 @@
 from knowledge.concept import Thing
 from knowledge.knowledge_base import KnowledgeBase
-from conversation import Conversation, NaiveConversationStrategy
-from reader import Reader
-from reasoner import Reasoner
-from speaker import Speaker
+from conversation.conversation import Conversation, NaiveConversationStrategy
+from main.conversation.reader import Reader
+from main.conversation.reasoner import Reasoner
+from main.conversation.speaker import Speaker
 
 
 class Ox(Thing):

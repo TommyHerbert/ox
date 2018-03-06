@@ -1,4 +1,4 @@
-from main.logical_tree import LogicalTreeLeaf
+from main.knowledge.logical_tree import LogicalTreeLeaf
 
 
 class Concept:

@@ -1,4 +1,4 @@
-from knowledge.didnt_understand import DidntUnderstand
+from main.knowledge.didnt_understand import DidntUnderstand
 
 
 class Conversation:

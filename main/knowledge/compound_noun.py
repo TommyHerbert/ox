@@ -1,5 +1,5 @@
 from functools import partial
-from main.logical_tree import LogicalTreeBranch
+from main.knowledge.logical_tree import LogicalTreeBranch
 from relation import has_lexical_form
 
 

@@ -1,7 +1,7 @@
 from functools import partial
 from concept import Category
-from context import Expectation
-from main.logical_tree import LogicalTreeBranch
+from main.conversation.context import Expectation
+from main.knowledge.logical_tree import LogicalTreeBranch
 
 
 class Question(Category):
