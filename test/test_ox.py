@@ -11,3 +11,6 @@ class TestOx(TestCase):
 
     def test_dont_understand(self):
         self.assertEqual("Sorry, I didn't understand that.", Ox().tell("Hello Ox."))
+
+    def test_favourite_foo(self):
+        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("What's your favourite foo?"))
