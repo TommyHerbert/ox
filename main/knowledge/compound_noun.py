@@ -16,9 +16,7 @@ class CompoundNoun:
 
     def find_referents(self, qualifier_string, reader, category):
         relations = reader.get_relations()
-        # this should be a utility function in relations.py
         instances = [r.arguments[0] for r in relations if r.relation_type == 'is_a' and r.arguments[1] == category]
-        # might need some classes for leaves and branches in the lexical tree
         return [i for i in instances if self.is_related(i, qualifier_string, relations)]
 
     @staticmethod
