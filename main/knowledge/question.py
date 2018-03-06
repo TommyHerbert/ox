@@ -1,3 +1,4 @@
+import re
 from functools import partial
 from concept import Category
 from main.conversation.context import Expectation
@@ -32,14 +33,8 @@ class FavouriteQuestion(Question):
 
     @staticmethod
     def get_category_string(input_string):
-        # probably there's a neater way to do this with regular expressions
-        start_string = "What's your favourite "
-        end_string = "?"
-        if not input_string.startswith(start_string):
-            return None
-        if not input_string.endswith(end_string):
-            return None
-        return input_string[len(start_string):0 - len(end_string)]
+        match = re.match("What's your favourite (.+)\?", input_string)
+        return match.group(1) if match else None
 
     def find_favourite(self, reader, category):
         relations = reader.get_relations()
