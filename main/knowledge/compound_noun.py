@@ -1,5 +1,6 @@
 from functools import partial
 from main.logical_tree import LogicalTreeBranch
+from relation import has_lexical_form
 
 
 class CompoundNoun:
@@ -20,20 +21,7 @@ class CompoundNoun:
         # might need some classes for leaves and branches in the lexical tree
         return [i for i in instances if self.is_related(i, qualifier_string, relations)]
 
-    def is_related(self, obj, lexical_form, relations):
-        # ah, so to be fair, CompoundNoun and Question ought to provide get_lexical_form
-        # is there a nicer 'exists' function or something?
-        relevant_relations = [r for r in relations if obj in r.arguments and self.has_lexical_form(r, lexical_form)]
-        return len(relevant_relations) > 0
-
-    # this too could be moved to relations.py
-    # and again, I expect this could be more concise
     @staticmethod
-    def has_lexical_form(relation, lexical_form):
-        for argument in relation.arguments:
-            try:
-                if argument.get_lexical_form() == lexical_form:
-                    return True
-            except AttributeError:
-                return False
-        return False
+    def is_related(obj, lexical_form, relations):
+        relevant_relations = [r for r in relations if obj in r.arguments and has_lexical_form(r, lexical_form)]
+        return len(relevant_relations) > 0
