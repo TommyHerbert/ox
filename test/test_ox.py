@@ -14,3 +14,12 @@ class TestOx(TestCase):
 
     def test_favourite_foo(self):
         self.assertEqual("Sorry, I didn't understand that.", Ox().tell("What's your favourite foo?"))
+
+    def test_favourite_foo(self):
+        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("What's your favourite foo song?"))
+
+    def test_favourite_foo(self):
+        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("What's your favourite Adele foo?"))
+
+    def test_favourite_foo(self):
+        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("Hello"))
