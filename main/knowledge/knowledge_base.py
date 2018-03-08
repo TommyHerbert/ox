@@ -19,7 +19,7 @@ class KnowledgeBase:
         someone_like_you = SomeoneLikeYou()
         compound_noun = CompoundNoun()
 
-        self.categories.append(FavouriteQuestion(self.ox))
+        self.categories.append(FavouriteQuestion())
         self.categories.append(singer)
         self.categories.append(song)
         self.categories.append(compound_noun)
@@ -35,3 +35,6 @@ class KnowledgeBase:
         self.relations.append(Relation('sang', (adele, someone_like_you)))
         self.relations.append(Relation('likes', (self.ox, hello, 1000)))
         self.relations.append(Relation('likes', (self.ox, someone_like_you, 900)))
+
+    def write(self):
+        pass

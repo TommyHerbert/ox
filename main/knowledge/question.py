@@ -3,6 +3,7 @@ from functools import partial
 from concept import Category
 from main.conversation.context import Expectation
 from main.knowledge.logical_tree import LogicalTreeBranch
+import main.ox
 
 
 class Question(Category):
@@ -20,9 +21,8 @@ class Question(Category):
 
 
 class FavouriteQuestion(Question):
-    def __init__(self, ox):
+    def __init__(self):
         Question.__init__(self)
-        self.ox = ox
 
     def get_question_logic(self, input_string, reader):
         category_string = self.get_category_string(input_string)
@@ -43,10 +43,11 @@ class FavouriteQuestion(Question):
             instances = [r.arguments[0] for r in relations if r.relation_type == 'is_a' and r.arguments[1] == category]
         return self.find_favourite_in_list(relations, instances)
 
-    def find_favourite_in_list(self, relations, candidates):
+    @staticmethod
+    def find_favourite_in_list(relations, candidates):
         ox_likes = []
         for r in relations:
-            if r.relation_type == 'likes' and r.arguments[0] == self.ox and r.arguments[1] in candidates:
+            if r.relation_type == 'likes' and r.arguments[0].__class__ == main.ox.Ox and r.arguments[1] in candidates:
                 ox_likes.append(r)
         if len(ox_likes) == 0:
             return None
