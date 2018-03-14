@@ -1,7 +1,10 @@
 from favourite_question import FavouriteQuestion
 from relation import Relation
-from song import Song, Hello, SomeoneLikeYou
-from singer import Singer, Adele
+from song import Song
+from someone_like_you import SomeoneLikeYou
+from hello import Hello
+from singer import Singer
+from adele import Adele
 from compound_noun import CompoundNoun
 
 
