@@ -1,4 +1,4 @@
-from question import FavouriteQuestion
+from favourite_question import FavouriteQuestion
 from relation import Relation
 from song import Song, Hello, SomeoneLikeYou
 from singer import Singer, Adele
