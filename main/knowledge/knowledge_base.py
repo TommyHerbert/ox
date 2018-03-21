@@ -1,3 +1,4 @@
+from main.utils.case import headline_to_snake
 from favourite_question import FavouriteQuestion
 from relation import Relation
 from song import Song
@@ -40,4 +41,10 @@ class KnowledgeBase:
         self.relations.append(Relation('likes', (self.ox, someone_like_you, 900)))
 
     def write(self):
-        pass
+        imports = ['from main.utils.case import headline_to_snake']
+        for category in self.categories:
+            class_name = category.__class__.__name__
+            module_name = headline_to_snake(class_name)
+            imports.append('from {} import {}'.format(module_name, class_name))
+            # TODO
+        # TODO
