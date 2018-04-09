@@ -1,25 +1,47 @@
 from unittest import TestCase
 from main.ox import Ox
+from main.conversation.conversation import Conversation
 
 
 class TestOx(TestCase):
     def test_song(self):
-        self.assertEqual('Hello', Ox().tell("What's your favourite song?"))
+        conversation = Conversation()
+        conversation.moves.append("What's your favourite song?")
+        Ox().tell(conversation)
+        self.assertEqual('Hello', conversation.moves[-1])
 
     def test_adele_song(self):
-        self.assertEqual('Hello', Ox().tell("What's your favourite Adele song?"))
+        conversation = Conversation()
+        conversation.moves.append("What's your favourite Adele song?")
+        Ox().tell(conversation)
+        self.assertEqual('Hello', conversation.moves[-1])
 
     def test_dont_understand(self):
-        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("Hello Ox."))
+        conversation = Conversation()
+        conversation.moves.append('Hello Ox.')
+        Ox().tell(conversation)
+        self.assertEqual("Sorry, I didn't understand that.", conversation.moves[-1])
 
     def test_favourite_foo(self):
-        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("What's your favourite foo?"))
+        conversation = Conversation()
+        conversation.moves.append("What's your favourite foo?")
+        Ox().tell(conversation)
+        self.assertEqual("Sorry, I didn't understand that.", conversation.moves[-1])
 
     def test_favourite_foo_song(self):
-        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("What's your favourite foo song?"))
+        conversation = Conversation()
+        conversation.moves.append("What's your favourite foo song?")
+        Ox().tell(conversation)
+        self.assertEqual("Sorry, I didn't understand that.", conversation.moves[-1])
 
     def test_favourite_adele_foo(self):
-        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("What's your favourite Adele foo?"))
+        conversation = Conversation()
+        conversation.moves.append("What's your favourite Adele foo?")
+        Ox().tell(conversation)
+        self.assertEqual("Sorry, I didn't understand that.", conversation.moves[-1])
 
     def test_hello(self):
-        self.assertEqual("Sorry, I didn't understand that.", Ox().tell("Hello"))
+        conversation = Conversation()
+        conversation.moves.append('Hello')
+        Ox().tell(conversation)
+        self.assertEqual("Sorry, I didn't understand that.", conversation.moves[-1])

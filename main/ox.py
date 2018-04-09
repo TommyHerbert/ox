@@ -1,6 +1,6 @@
 from knowledge.concept import Thing
 from knowledge.knowledge_base import KnowledgeBase
-from conversation.conversation import Conversation, NaiveConversationStrategy
+from conversation.conversation import NaiveConversationStrategy
 from main.conversation.reader import Reader
 from main.conversation.reasoner import Reasoner
 from main.conversation.speaker import Speaker
@@ -16,7 +16,6 @@ class Ox(Thing):
         self.goal = 'do good by teaching'
 
         self.knowledge_base = KnowledgeBase(self)
-        self.conversation = Conversation()
         self.strategy = NaiveConversationStrategy()
         self.reader = Reader(self.knowledge_base)
         self.reasoner = Reasoner()
@@ -24,8 +23,8 @@ class Ox(Thing):
 
     # Say something to Ox. Ox will update its model of the conversation
     # and then say something back.
-    def tell(self, interlocutor_utterance):
-        self.reader.read(interlocutor_utterance, self.conversation)
-        next_move = self.strategy.pop_move(self.conversation.context)
+    def tell(self, conversation):
+        self.reader.read_last_move(conversation)
+        next_move = self.strategy.pop_move(conversation.context)
         answer_concept = self.reasoner.take_move(next_move)
-        return self.speaker.utter(answer_concept)
+        conversation.moves.append(self.speaker.utter(answer_concept))

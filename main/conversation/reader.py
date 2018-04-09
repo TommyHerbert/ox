@@ -2,9 +2,8 @@ class Reader:
     def __init__(self, knowledge_base):
         self.knowledge_base = knowledge_base
 
-    def read(self, utterance, conversation):
-        conversation.moves.append(utterance)
-        logical_form = self.parse(utterance)
+    def read_last_move(self, conversation):
+        logical_form = self.parse(conversation.moves[-1])
         if logical_form:
             conversation.context.append(logical_form)
 
