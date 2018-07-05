@@ -1,12 +1,12 @@
 from main.utils.case import headline_to_snake
-from favourite_question import FavouriteQuestion
-from relation import Relation
-from song import Song
-from someone_like_you import SomeoneLikeYou
-from hello import Hello
-from singer import Singer
-from adele import Adele
-from compound_noun import CompoundNoun
+from main.knowledge.favourite_question import FavouriteQuestion
+from main.knowledge.relation import Relation
+from main.knowledge.song import Song
+from main.knowledge.someone_like_you import SomeoneLikeYou
+from main.knowledge.hello import Hello
+from main.knowledge.singer import Singer
+from main.knowledge.adele import Adele
+from main.knowledge.compound_noun import CompoundNoun
 
 
 class KnowledgeBase:

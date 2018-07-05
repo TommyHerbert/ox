@@ -1,4 +1,4 @@
-from concept import Category
+from main.knowledge.concept import Category
 from main.conversation.context import Expectation
 
 

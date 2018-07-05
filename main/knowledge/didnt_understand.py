@@ -1,4 +1,4 @@
-from concept import Thing
+from main.knowledge.concept import Thing
 
 
 # It's kind of a Thing. Maybe eventually, DidntUnderstand will be a
