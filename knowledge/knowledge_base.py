@@ -52,14 +52,19 @@ class KnowledgeBase:
         add_relation('likes', (myself, hello, 1000))
         add_relation('likes', (myself, someone_like_you, 900))
 
-    def write(self):
+    # TODO: maybe the Concept class should handle some of this logic
+    def write(self, path):
         imports = []
-        for category in self.categories:
-            template = 'from knowledge.{} import {}' # TODO get package name
+        instantiations = []
+        for concept in self.categories + self.things:
+            import_template = 'from knowledge.{} import {}'
             class_name = category.__class__.__name__
             module_name = headline_to_snake(class_name)
-            imports.append(template.format(module_name, class_name))
-        # TODO
+            imports.append(import_template.format(module_name, class_name))
+            instantiation_template = '{} = {}()'
+            instantiations.append('{} = {}()'.format(module_name, class_name))
+            
+        imports.append('from knowledge.relation import Relation')
         imports.append('from utils.case import headline_to_snake')
         # TODO
 
