@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import unittest
 from app import create_app, db
 from app.models import Speaker, Conversation, Utterance
@@ -76,8 +75,4 @@ class BackEndTests(unittest.TestCase):
 
         Mind().continue_conversation(self.conversation)
         self.assertEqual(response, self.conversation.utterances[-1].text)
-
-
-if __name__ == '__main__':
-    unittest.main(verbosity=2)
 
