@@ -62,7 +62,7 @@ class BackEndTests(unittest.TestCase):
         expected_response = "Sorry, I didn't understand that."
         self._assert_response(test_input, expected_response)
 
-    def test_(self):
+    def test_empty_input(self):
         test_input = ""
         expected_response = "Sorry, I didn't understand that."
         self._assert_response(test_input, expected_response)
