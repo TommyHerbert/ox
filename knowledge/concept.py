@@ -1,3 +1,4 @@
+from utils.case import headline_to_snake
 from knowledge.logical_tree import LogicalTreeLeaf
 
 
@@ -13,6 +14,16 @@ class Concept:
             return LogicalTreeLeaf(self)
         else:
             return None
+
+    def get_class_name(self):
+        return self.__class__.__name__
+
+    def get_module_name(self):
+        return headline_to_snake(self.get_class_name())
+    
+    def get_import_statement(self):
+        template = 'from knowledge.{} import {}'
+        return template.format(self.get_module_name(), self.get_class_name())
 
 
 class Category(Concept):
