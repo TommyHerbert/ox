@@ -3,6 +3,7 @@ from app import create_app, db
 from app.models import Speaker, Conversation, Utterance
 from config import Config
 from knowledge.song import Song
+from knowledge.adele import Adele
 
 
 class TestConfig(Config):
@@ -36,4 +37,8 @@ class TestSelfWriting(unittest.TestCase):
     def test_get_import_statement(self):
         expected = 'from knowledge.song import Song'
         self.assertEqual(expected, Song().get_import_statement())
+
+    def test_get_instantiation_statement(self):
+        expected = 'adele = Adele()'
+        self.assertEqual(expected, Adele().get_instantiation_statement())
 

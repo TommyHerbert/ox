@@ -25,6 +25,10 @@ class Concept:
         template = 'from knowledge.{} import {}'
         return template.format(self.get_module_name(), self.get_class_name())
 
+    def get_instantiation_statement(self):
+        return '{} = {}()'.format(self.get_module_name(),
+                                  self.get_class_name())
+
 
 class Category(Concept):
     def __init__(self):
