@@ -23,6 +23,6 @@ class TestSelfWriting(unittest.TestCase):
     def test_is_knowledge_base_empty(self):
         knowledge_base = KnowledgeBase()
         self.assertTrue(knowledge_base.is_empty())
-        KnowledgeBasePopulator().populate(knowledge_base)
+        KnowledgeBasePopulator.populate(knowledge_base)
         self.assertFalse(knowledge_base.is_empty())
 

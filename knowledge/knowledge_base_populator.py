@@ -9,7 +9,7 @@ from knowledge.someone_like_you import SomeoneLikeYou
 from knowledge.relation import Relation
 
 class KnowledgeBasePopulator:
-    def populate(self, knowledge_base):
+    def populate(knowledge_base):
         # instantiate categories
         singer = Singer()
         song = Song()
