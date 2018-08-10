@@ -1,5 +1,6 @@
 from utils.case import headline_to_snake
 from knowledge.logical_tree import LogicalTreeLeaf
+from os.path import normpath, sep
 
 
 class Concept:
@@ -21,9 +22,14 @@ class Concept:
     def get_module_name(self):
         return headline_to_snake(self.get_class_name())
     
-    def get_import_statement(self):
-        template = 'from knowledge.{} import {}'
-        return template.format(self.get_module_name(), self.get_class_name())
+    def get_import_statement(self, path):
+        package_path = normpath(path).replace(sep, '.')
+        if package_path != '':
+            package_path += '.'
+        template = 'from {}knowledge.{} import {}'
+        return template.format(package_path,
+                               self.get_module_name(),
+                               self.get_class_name())
 
     def get_instantiation_statement(self):
         return '{} = {}()'.format(self.get_module_name(),

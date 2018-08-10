@@ -6,10 +6,10 @@ from knowledge.knowledge_base import KnowledgeBase
 
 class TestSelfWriting(unittest.TestCase):
 
-    # TODO: pass in a path
     def test_get_import_statement(self):
-        expected = 'from knowledge.song import Song'
-        self.assertEqual(expected, Song().get_import_statement())
+        expected = 'from foo.bar.baz.qux.knowledge.song import Song'
+        actual = Song().get_import_statement('foo/bar/baz/qux')
+        self.assertEqual(expected, actual)
 
     def test_get_instantiation_statement(self):
         expected = 'adele = Adele()'
