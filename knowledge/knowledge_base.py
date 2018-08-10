@@ -8,9 +8,7 @@ class KnowledgeBase:
         self.relations = []
 
     def is_empty(self):
-        return self.categories == [] and \
-               self.things == [] and \
-               self.relations == []
+        return self.categories + self.things + self.relations == []
 
     # TODO: maybe the Concept class should handle some of this logic
     def write(self, path):
