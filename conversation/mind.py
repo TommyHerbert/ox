@@ -1,5 +1,6 @@
 from app.models import Speaker, Utterance
 from knowledge.knowledge_base import KnowledgeBase
+from knowledge.knowledge_base_populator import KnowledgeBasePopulator
 from conversation.reader import Reader
 from conversation.strategy import NaiveConversationStrategy
 from conversation.reasoner import Reasoner
@@ -9,6 +10,7 @@ class Mind:
     def __init__(self):
         self.ox = Speaker.find_by_email('project.ox.mail@gmail.com')
         self.knowledge_base = KnowledgeBase()
+        KnowledgeBasePopulator.populate(self.knowledge_base)
         self.reader = Reader(self.knowledge_base)
         self.strategy = NaiveConversationStrategy()
         self.reasoner = Reasoner()
