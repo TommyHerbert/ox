@@ -22,10 +22,11 @@ class Concept:
     def get_module_name(self):
         return headline_to_snake(self.get_class_name())
     
-    def get_import_statement(self, path):
-        package_path = normpath(path).replace(sep, '.')
-        if package_path != '':
-            package_path += '.'
+    def get_import_statement(self, path=''):
+        if path == '':
+            package_path = ''
+        else:
+            package_path = normpath(path).replace(sep, '.') + '.'
         template = 'from {}knowledge.{} import {}'
         return template.format(package_path,
                                self.get_module_name(),
