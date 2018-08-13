@@ -9,4 +9,10 @@ class KnowledgeBase:
 
     def is_empty(self):
         return self.categories + self.things + self.relations == []
+    
+    def export_populator(self, path):
+        pass # TODO
+
+    def matches(self, knowledge_base):
+        pass # TODO
 
