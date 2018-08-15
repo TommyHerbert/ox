@@ -1,9 +1,10 @@
 from functools import partial
 from knowledge.logical_tree import LogicalTreeBranch
 from knowledge.relation import has_lexical_form
+from knowledge.concept import Category
 
 
-class CompoundNoun:
+class CompoundNoun(Category):
     def __init__(self):
         pass
 
