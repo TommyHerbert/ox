@@ -1,3 +1,7 @@
+from os.path import normpath, sep
+from utils.paths import to_package_path
+
+
 class Relation:
     def __init__(self, relation_type, arguments):
         self.relation_type = relation_type
@@ -12,4 +16,9 @@ def has_lexical_form(relation, lexical_form):
         except AttributeError:
             return False
     return False
+
+
+def get_relation_import_statement(path=''):
+    template = 'from {}knowledge.relation import Relation'
+    return template.format(to_package_path(path, final_dot=True))
 
