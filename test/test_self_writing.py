@@ -62,14 +62,14 @@ class TestSelfWriting(unittest.TestCase):
         KnowledgeBasePopulator.populate(knowledge_base1)
 
         knowledge_base1.export_populator('test_output/iteration2')
-        from test_output.iteration2.knowledge \
+        from test_output.iteration2.knowledge.knowledge_base_populator \
             import KnowledgeBasePopulator as KnowledgeBasePopulator2
         knowledge_base2 = KnowledgeBase()
         KnowledgeBasePopulator2.populate(knowledge_base2)
         self.assertTrue(knowledge_base1.matches(knowledge_base2))
         
         knowledge_base2.export_populator('test_output/iteration3')
-        from test_output.iteration3.knowledge \
+        from test_output.iteration3.knowledge.knowledge_base_populator \
             import KnowledgeBasePopulator as KnowledgeBasePopulator3
         knowledge_base3 = KnowledgeBase()
         KnowledgeBasePopulator3.populate(knowledge_base3)
