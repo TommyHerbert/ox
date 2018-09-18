@@ -41,6 +41,7 @@ class KnowledgeBase:
         populate_relations = self.get_addition_logic(self.relations)
         populator_source = populator_template.format(
             imports=imports,
+            instantiation=instantiation,
             populate_categories=populate_categories,
             populate_things=populate_things,
             populate_relations=populate_relations)
@@ -53,6 +54,9 @@ class KnowledgeBase:
         for concept in self.categories + self.things:
             imports += concept.get_import_statement(path) + '\n'
         return imports[-1] # cut the trailing newline
+
+    def get_instantiation_statements(self, concepts):
+        pass # TODO
 
     def get_population_statements(self, concepts):
         pass # TODO
