@@ -7,6 +7,34 @@ class Relation:
         self.relation_type = relation_type
         self.arguments = arguments
 
+    def __lt__(self, other):
+        if self.relation_type < other.relation_type:
+            return True
+        if other.relation_type < self.relation_type:
+            return False
+        self_args_length = len(self.arguments)
+        other_args_length = len(other.arguments)
+        if self_args_length < other_args_length:
+            return True
+        if other_args_length < self_args_length:
+            return False
+        for i in range(self_args_length):
+            if self.arguments[i] < other.arguments[i]:
+                return True
+            if other.arguments[i] < self.arguments[i]:
+                return False
+        return False
+
+    def __eq__(self, other):
+        self_args_length = len(self.arguments)
+        if self.relation_type == other.relation_type and \
+           self_args_length == len(other.arguments):
+            for i in range (self_args_length):
+                if self.arguments[i] != other.arguments[i]:
+                    return False
+            return True
+        return False
+
 
 def has_lexical_form(relation, lexical_form):
     for argument in relation.arguments:

@@ -25,5 +25,5 @@ class TestRelation(unittest.TestCase):
         someone_like_you = SomeoneLikeYou()
         hello_relation = Relation('sang', (adele, hello))
         someone_relation = Relation('sang', (adele, someone_like_you))
-        self.assertTrue(hello_relation < someone_like_you)
+        self.assertTrue(hello_relation < someone_relation)
 
