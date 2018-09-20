@@ -1,5 +1,6 @@
 import unittest
 from knowledge.singer import Singer
+from knowledge.adele import Adele
 from knowledge.hello import Hello
 from knowledge.someone_like_you import SomeoneLikeYou
 
