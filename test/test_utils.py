@@ -1,5 +1,6 @@
 import unittest
 from utils.paths import to_package_path
+from utils.lists import sorted_copy
 from os.path import join
 
 
@@ -16,4 +17,10 @@ class TestUtils(unittest.TestCase):
         expected = 'foo.bar.baz.'
         actual = to_package_path(join('foo', 'bar', 'baz'), final_dot=True)
         self.assertEqual(expected, actual)
+
+    def test_sorted_copy(self):
+        list1 = [3, 2, 1]
+        list2 = sorted_copy(list1)
+        self.assertEqual([3, 2, 1], list1)
+        self.assertEqual([1, 2, 3], list2)
 

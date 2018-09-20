@@ -3,6 +3,7 @@ from os.path import join
 from os import makedirs
 from pathlib import Path
 from utils.paths import to_package_path
+from utils.lists import sorted_copy
 
 populator_template = '''{imports}
 
@@ -64,6 +65,8 @@ class KnowledgeBase:
     def get_addition_logic(self, relations):
         pass # TODO
 
-    def matches(self, knowledge_base):
-        pass # TODO
+    def matches(self, other):
+        return sorted_copy(self.categories) == sorted_copy(other.categories) \
+           and sorted_copy(self.things) == sorted_copy(other.things) \
+           and sorted_copy(self.relations) == sorted_copy(other.relations)
 
