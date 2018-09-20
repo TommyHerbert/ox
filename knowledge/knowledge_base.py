@@ -34,6 +34,7 @@ class KnowledgeBase:
         makedirs(knowledge_path)
         Path(join(knowledge_path, '__init__.py')).touch()
         populator_path = join(knowledge_path, 'knowledge_base_populator.py')
+        # TODO: all the imported files need to have copies on the path
         imports = self.get_imports(path)
         concepts = self.categories + self.things
         instantiation = self.get_instantiation_statements(concepts)
