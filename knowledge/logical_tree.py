@@ -20,3 +20,7 @@ class LogicalTreeLeaf(LogicalTree):
 
     def is_leaf(self):
         return True
+
+
+def write_logical_tree(path):
+    pass # TODO
