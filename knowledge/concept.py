@@ -49,6 +49,7 @@ class Concept:
         Path(join(knowledge_path, '__init__.py')).touch()
 
         module_path = join(knowledge_path, self.get_module_name()) + '.py'
+        concept_type = self.get_concept_type()
         with open(module_path, 'w') as module_file:
             pass # TODO
 
