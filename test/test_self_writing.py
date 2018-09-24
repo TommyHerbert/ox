@@ -1,9 +1,10 @@
 import unittest
 from knowledge.song import Song
 from knowledge.adele import Adele
+from knowledge.singer import Singer
 from knowledge.knowledge_base import KnowledgeBase
 from knowledge.knowledge_base_populator import KnowledgeBasePopulator
-from knowledge.relation import get_relation_import_statement
+from knowledge.relation import get_relation_import_statement, write_relation
 from os import mkdir
 from pathlib import Path
 from shutil import rmtree
@@ -56,6 +57,36 @@ class TestSelfWriting(unittest.TestCase):
         knowledge_base3.categories.append(Song())
         self.assertTrue(knowledge_base1.matches(knowledge_base2))
         self.assertFalse(knowledge_base1.matches(knowledge_base3))
+
+    def test_write_concept(self):
+        adele1 = Adele()
+        adele1.write('test_output/adele2')
+        from test_output.adele2.knowledge.adele import Adele as Adele2
+        adele2 = Adele2()
+        self.assertEqual('Adele', adele2.get_lexical_form())
+
+    # TODO: I've sort of recapped other tests here
+    # I guess it would be neater to export a populator and then somehow
+    # run all the unit tests on the new package
+    # (everything about this project eats its own tail)
+    def test_write_relation(self):
+        write_relation('test_output/relation2')
+        from test_output.relation2.knowledge.relation \
+            import Relation as Relation2
+        adele = Adele()
+        adele_singer = Relation2('is_a', (adele, Singer()))
+        self.assertEqual(adele_singer, adele_singer)
+        adele_song = Relation('wrote_a', (adele, Song()))
+        self.assertTrue(adele_singer < adele_song)
+        from test_output.relation2.knowledge.relation \
+            import has_lexical_form as has_lexical_form2
+        self.assertTrue(has_lexical_form2(adele_singer, 'Adele'))
+        from test_output.relation2.knowledge.relation \
+            import get_relation_import_statement \
+            as get_relation_import_statement2
+        expected = 'from foo.bar.baz.qux.knowledge.relation import Relation'
+        actual = get_relation_import_statement2('foo/bar/baz/qux')
+        self.assertEqual(expected, actual)
 
     def test_export_populator(self):
         knowledge_base1 = KnowledgeBase()

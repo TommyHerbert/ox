@@ -8,6 +8,7 @@ from knowledge.hello import Hello
 from knowledge.someone_like_you import SomeoneLikeYou
 from knowledge.relation import Relation
 
+
 class KnowledgeBasePopulator:
     def populate(knowledge_base):
         # instantiate categories

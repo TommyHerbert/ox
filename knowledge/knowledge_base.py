@@ -35,6 +35,8 @@ class KnowledgeBase:
         Path(join(knowledge_path, '__init__.py')).touch()
         populator_path = join(knowledge_path, 'knowledge_base_populator.py')
         # TODO: all the imported files need to have copies on the path
+        # tell each category and each thing to write itself to the path
+        # tell the relation class to write itself to the path
         imports = self.get_imports(path)
         concepts = self.categories + self.things
         instantiation = self.get_instantiation_statements(concepts)
@@ -50,7 +52,6 @@ class KnowledgeBase:
         with open(populator_path, 'w') as populator_file:
             populator_file.write(populator_source)
 
-    # TODO: could probably write a test for this piece individually
     def get_imports(self, path):
         imports = ''
         for concept in self.categories + self.things:

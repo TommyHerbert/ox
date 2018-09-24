@@ -50,3 +50,6 @@ def get_relation_import_statement(path=''):
     template = 'from {}knowledge.relation import Relation'
     return template.format(to_package_path(path, final_dot=True))
 
+def write_relation(path):
+    pass # TODO
+
