@@ -58,6 +58,10 @@ class TestSelfWriting(unittest.TestCase):
         self.assertTrue(knowledge_base1.matches(knowledge_base2))
         self.assertFalse(knowledge_base1.matches(knowledge_base3))
 
+    def test_get_concept_type(self):
+        self.assertEqual('Thing', Adele().get_concept_type())
+        self.assertEqual('Category', Singer().get_concept_type())
+
     def test_write_concept(self):
         adele1 = Adele()
         adele1.write('test_output/adele2')
