@@ -10,4 +10,4 @@ class Config(object):
     DEFAULT_DB = 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or DEFAULT_DB
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SOURCE_PATH = os.environ.get('SOURCE_PATH')
+    SOURCE_PATH = os.environ.get('OX_SOURCE_PATH')
