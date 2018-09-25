@@ -21,6 +21,8 @@ class Concept:
         return self.__class__.__name__
 
     def __eq__(self, other):
+        if not isinstance(other, Concept):
+            return False
         return self.get_class_name() == other.get_class_name()
 
     def __lt__(self, other):
