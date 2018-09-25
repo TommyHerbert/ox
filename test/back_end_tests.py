@@ -73,6 +73,6 @@ class BackEndTests(unittest.TestCase):
         db.session.add(utterance)
         db.session.commit()
 
-        Mind().continue_conversation(self.conversation)
+        Mind().continue_conversation(self.conversation, '')
         self.assertEqual(response, self.conversation.utterances[-1].text)
 

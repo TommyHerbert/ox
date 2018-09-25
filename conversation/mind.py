@@ -21,9 +21,9 @@ class Mind:
         utterance = Utterance(speaker=self.ox, text='Hello, my name is Ox.')
         conversation.add_utterance(utterance)
 
-    def continue_conversation(self, conversation):
+    def continue_conversation(self, conversation, source_path):
         self.reader.read_last_move(conversation)
-        next_move = self.strategy.pop_move(conversation.context)
+        next_move = self.strategy.pop_move(conversation.context, source_path)
         answer_concept = self.reasoner.take_move(next_move)
         text = self.expresser.express(answer_concept)
         conversation.add_utterance(Utterance(speaker=self.ox, text=text))

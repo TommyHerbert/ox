@@ -1,7 +1,7 @@
 from app import db
 from app.api import bp
 from app.api.auth import token_auth
-from flask import request, jsonify, g
+from flask import request, jsonify, g, current_app
 from conversation.mind import Mind
 from app.models import Conversation, Utterance
 
@@ -18,7 +18,8 @@ def post_utterance():
         return error_response(404, 'no such conversation')
     utterance = Utterance(speaker_id=data['speaker_id'], text=data['text'])
     conversation.add_utterance(utterance)
-    Mind().continue_conversation(conversation)
+    source_path = current_app.config['SOURCE_PATH']
+    Mind().continue_conversation(conversation, source_path)
     db.session.commit()
     return jsonify(conversation.to_dict())
 

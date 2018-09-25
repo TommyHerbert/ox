@@ -1,4 +1,5 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import \
+    render_template, flash, redirect, url_for, request, current_app
 from app import db
 from app.browser_main.forms import SaySomethingForm
 from flask_login import current_user, login_required
@@ -61,7 +62,8 @@ def _set_up_say_something_form(conversation, new=False):
     if form.validate_on_submit():
         utterance = Utterance(speaker=current_user, text=form.text.data)
         conversation.add_utterance(utterance)
-        Mind().continue_conversation(conversation)
+        source_path = current_app.config['SOURCE_PATH']
+        Mind().continue_conversation(conversation, source_path)
         db.session.commit()
         if new:
             return redirect(url_for('browser_main.index'))

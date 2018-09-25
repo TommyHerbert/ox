@@ -6,7 +6,8 @@ class NaiveConversationStrategy:
         pass
 
     @staticmethod
-    def pop_move(context):
+    def pop_move(context, source_path):
+        # TODO: maybe I could log something here to prove the path got through
         if not context:
             return NaiveConversationStrategy._didnt_understand()
         for i in range(len(context)):
