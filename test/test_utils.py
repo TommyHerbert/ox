@@ -1,10 +1,15 @@
 import unittest
 from utils.paths import to_package_path
 from utils.lists import sorted_copy
+from utils.knowledge import create_knowledge_package
 from os.path import join
 
 
 class TestUtils(unittest.TestCase):
+    def setUp(self):
+        # 'utils_test_output'
+        pass # TODO
+
     def test_to_package_path_default_behaviour(self):
         self.assertEqual('', to_package_path(''))
 
@@ -24,3 +29,5 @@ class TestUtils(unittest.TestCase):
         self.assertEqual([3, 2, 1], list1)
         self.assertEqual([1, 2, 3], list2)
 
+    def test_create_knowledge_package(self):
+        pass # TODO
