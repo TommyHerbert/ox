@@ -2,7 +2,7 @@ import unittest
 from utils.paths import to_package_path
 from utils.lists import sorted_copy
 from utils.knowledge import create_knowledge_package
-from os.path import join, exists
+from os.path import join, exists, isdir, isfile
 from shutil import rmtree
 
 OUTPUT_DIR = 'utils_test_output'
@@ -40,7 +40,7 @@ class TestUtils(unittest.TestCase):
 
     def test_create_knowledge_package(self):
         create_knowledge_package(OUTPUT_DIR)
-        self.assertTrue(exists(OUTPUT_DIR))
-        self.assertTrue(exists(OUTPUT_DIR + '/knowledge'))
-        self.assertTrue(exists(OUTPUT_DIR + '/knowledge/__init__.py'))
+        self.assertTrue(isdir(OUTPUT_DIR))
+        self.assertTrue(isdir(OUTPUT_DIR + '/knowledge'))
+        self.assertTrue(isfile(OUTPUT_DIR + '/knowledge/__init__.py'))
 
