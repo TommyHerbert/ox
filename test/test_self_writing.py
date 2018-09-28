@@ -64,7 +64,8 @@ class TestSelfWriting(unittest.TestCase):
         self.assertEqual('Category', Singer().get_concept_type())
 
     def test_write_concept(self):
-        # TODO: create knowledge package, don't assume main logic will create it
+        unique_id = create_knowledge_package('test_output')
+        path = join('test_output', unique_id, )
         adele1 = Adele()
         adele1.write('test_output/adele2')
         from test_output.adele2.knowledge.adele import Adele as Adele2
