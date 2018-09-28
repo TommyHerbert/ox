@@ -39,8 +39,10 @@ class TestUtils(unittest.TestCase):
         self.assertEqual([1, 2, 3], list2)
 
     def test_create_knowledge_package(self):
-        create_knowledge_package(OUTPUT_DIR)
-        self.assertTrue(isdir(OUTPUT_DIR))
-        self.assertTrue(isdir(OUTPUT_DIR + '/knowledge'))
-        self.assertTrue(isfile(OUTPUT_DIR + '/knowledge/__init__.py'))
+        path = OUTPUT_DIR + '/unique_id'
+        create_knowledge_package(path)
+        self.assertTrue(isdir(path))
+        self.assertTrue(isfile(path + '/__init__.py'))
+        self.assertTrue(isdir(path + '/knowledge'))
+        self.assertTrue(isfile(path + '/knowledge/__init__.py'))
 
