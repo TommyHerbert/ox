@@ -1,4 +1,5 @@
 import unittest
+from utils.knowledge import create_knowledge_package
 from knowledge.song import Song
 from knowledge.adele import Adele
 from knowledge.singer import Singer
@@ -20,21 +21,21 @@ class TestSelfWriting(unittest.TestCase):
 
     def test_get_import_statement(self):
         expected = 'from foo.bar.baz.qux.knowledge.song import Song'
-        actual = Song().get_import_statement('foo/bar/baz/qux')
+        actual = Song().get_import_statement('foo/bar/baz/qux/knowledge')
         self.assertEqual(expected, actual)
 
     def test_get_import_statement_with_empty_path(self):
-        expected = 'from knowledge.song import Song'
+        expected = 'from song import Song'
         actual = Song().get_import_statement()
         self.assertEqual(expected, actual)
 
     def test_get_relation_import_statement(self):
         expected = 'from foo.bar.baz.qux.knowledge.relation import Relation'
-        actual = get_relation_import_statement('foo/bar/baz/qux')
+        actual = get_relation_import_statement('foo/bar/baz/qux/knowledge')
         self.assertEqual(expected, actual)
 
     def test_get_relation_import_statement_with_empty_path(self):
-        expected = 'from knowledge.relation import Relation'
+        expected = 'from relation import Relation'
         actual = get_relation_import_statement()
         self.assertEqual(expected, actual)
 
@@ -63,6 +64,7 @@ class TestSelfWriting(unittest.TestCase):
         self.assertEqual('Category', Singer().get_concept_type())
 
     def test_write_concept(self):
+        # TODO: create knowledge package, don't assume main logic will create it
         adele1 = Adele()
         adele1.write('test_output/adele2')
         from test_output.adele2.knowledge.adele import Adele as Adele2
@@ -70,6 +72,7 @@ class TestSelfWriting(unittest.TestCase):
         self.assertEqual('Adele', adele2.get_lexical_form())
 
     def test_export_populator(self):
+        # TODO: create knowledge package, don't assume main logic will create it
         knowledge_base1 = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base1)
 
