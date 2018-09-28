@@ -2,13 +2,22 @@ import unittest
 from utils.paths import to_package_path
 from utils.lists import sorted_copy
 from utils.knowledge import create_knowledge_package
-from os.path import join
+from os.path import join, exists
+from shutil import rmtree
+
+OUTPUT_DIR = 'utils_test_output'
 
 
 class TestUtils(unittest.TestCase):
     def setUp(self):
-        # 'utils_test_output'
-        pass # TODO
+        self.clear_output()
+
+    def tearDown(self):
+        self.clear_output()
+
+    def clear_output(self):
+        if exists(OUTPUT_DIR):
+            rmtree(OUTPUT_DIR)
 
     def test_to_package_path_default_behaviour(self):
         self.assertEqual('', to_package_path(''))
@@ -30,4 +39,8 @@ class TestUtils(unittest.TestCase):
         self.assertEqual([1, 2, 3], list2)
 
     def test_create_knowledge_package(self):
-        pass # TODO
+        create_knowledge_package(OUTPUT_DIR)
+        self.assertTrue(exists(OUTPUT_DIR))
+        self.assertTrue(exists(OUTPUT_DIR + '/knowledge'))
+        self.assertTrue(exists(OUTPUT_DIR + '/knowledge/__init__.py'))
+

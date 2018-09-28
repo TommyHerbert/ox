@@ -1,3 +1,10 @@
+from os import makedirs
+from os.path import join
+from pathlib import Path
+
+
 def create_knowledge_package(path):
-    pass # TODO
+    knowledge_path = join(path, 'knowledge')
+    makedirs(knowledge_path)
+    Path(join(knowledge_path, '__init__.py')).touch()
 
