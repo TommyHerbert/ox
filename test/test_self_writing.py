@@ -1,5 +1,7 @@
+from importlib import import_module
 import unittest
 from utils.knowledge import create_knowledge_package
+from utils.paths import to_package_path
 from knowledge.song import Song
 from knowledge.adele import Adele
 from knowledge.singer import Singer
@@ -65,14 +67,17 @@ class TestSelfWriting(unittest.TestCase):
 
     def test_write_concept(self):
         unique_id = create_knowledge_package('test_output')
-        path = join('test_output', unique_id, )
+        path = join('test_output', unique_id, 'knowledge')
         adele1 = Adele()
-        adele1.write('test_output/adele2')
-        from test_output.adele2.knowledge.adele import Adele as Adele2
-        adele2 = Adele2()
+        adele1.write(path)
+        adele_package2 = import_module(to_package_path(path, True) + 'adele')
+        adele2 = adele_package2.Adele()
         self.assertEqual('Adele', adele2.get_lexical_form())
 
     def test_export_populator(self):
+        unique_id = create_knowledge_package('test_output')
+
+
         # TODO: create knowledge package, don't assume main logic will create it
         knowledge_base1 = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base1)
