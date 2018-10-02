@@ -70,29 +70,27 @@ class TestSelfWriting(unittest.TestCase):
         path = join('test_output', unique_id, 'knowledge')
         adele1 = Adele()
         adele1.write(path)
-        adele_package2 = import_module(to_package_path(path, True) + 'adele')
-        adele2 = adele_package2.Adele()
+        adele_module2 = import_module(to_package_path(path, True) + 'adele')
+        adele2 = adele_module2.Adele()
         self.assertEqual('Adele', adele2.get_lexical_form())
 
     def test_export_populator(self):
-        unique_id = create_knowledge_package('test_output')
-
-
-        # TODO: create knowledge package, don't assume main logic will create it
         knowledge_base1 = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base1)
-
-        knowledge_base1.export_populator('test_output/iteration2')
-        from test_output.iteration2.knowledge.knowledge_base_populator \
-            import KnowledgeBasePopulator as KnowledgeBasePopulator2
-        knowledge_base2 = KnowledgeBase()
-        KnowledgeBasePopulator2.populate(knowledge_base2)
+        knowledge_base2 = generate_copy(knowledge_base1, 'test_output')
         self.assertTrue(knowledge_base1.matches(knowledge_base2))
-        
-        knowledge_base2.export_populator('test_output/iteration3')
-        from test_output.iteration3.knowledge.knowledge_base_populator \
-            import KnowledgeBasePopulator as KnowledgeBasePopulator3
-        knowledge_base3 = KnowledgeBase()
-        KnowledgeBasePopulator3.populate(knowledge_base3)
+        knowledge_base3 = generate_copy(knowledge_base2, 'test_output')
         self.assertTrue(knowledge_base1.matches(knowledge_base3))
+
+ 
+def generate_copy(knowledge_base, path):
+    unique_id = create_knowledge_package(path)
+    knowledge_directory_path = join(path, unique_id, 'knowledge')
+    knowledge_base.export_populator(knowledge_directory_path)
+    populator_module_path = to_package_path(knowledge_directory_path) + \
+                            '.knowledge_base_populator'
+    populator_module = import_module(populator_module_path)
+    knowledge_base_copy = KnowledgeBase()
+    populator_module.KnowledgeBasePopulator.populate(knowledge_base_copy)
+    return knowledge_base_copy
 
