@@ -9,6 +9,7 @@ from knowledge.someone_like_you import SomeoneLikeYou
 from knowledge.relation import Relation
 
 
+# TODO: why have this class? populate should be a top-level function
 class KnowledgeBasePopulator:
     def populate(knowledge_base):
         # instantiate categories
