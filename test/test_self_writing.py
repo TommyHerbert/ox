@@ -9,6 +9,7 @@ from knowledge.knowledge_base import KnowledgeBase
 from knowledge.knowledge_base_populator import KnowledgeBasePopulator
 from knowledge.relation import get_relation_import_statement, write_relation
 from os import mkdir
+from os.path import join
 from pathlib import Path
 from shutil import rmtree
 
