@@ -67,13 +67,9 @@ class TestSelfWriting(unittest.TestCase):
         self.assertEqual('Category', Singer().get_concept_type())
 
     def test_write_concept(self):
-        unique_id = create_knowledge_package('test_output')
-        path = join('test_output', unique_id, 'knowledge')
-        adele1 = Adele()
-        adele1.write(path)
-        adele_module2 = import_module(to_package_path(path, True) + 'adele')
-        adele2 = adele_module2.Adele()
-        self.assertEqual('Adele', adele2.get_lexical_form())
+        Adele().write('test_output')
+        from test_output.adele import Adele as Adele2
+        self.assertEqual('Adele', Adele2().get_lexical_form())
 
     def test_export_populator(self):
         knowledge_base1 = KnowledgeBase()
