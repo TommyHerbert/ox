@@ -1,17 +1,22 @@
 from importlib import import_module
 import unittest
-from utils.knowledge import create_knowledge_package
+from utils.knowledge import create_unique_package, copy_knowledge_package
 from utils.paths import to_package_path
+from knowledge.myself import Myself
 from knowledge.song import Song
 from knowledge.adele import Adele
 from knowledge.singer import Singer
 from knowledge.knowledge_base import KnowledgeBase
 from knowledge.knowledge_base_populator import KnowledgeBasePopulator
-from knowledge.relation import get_relation_import_statement, write_relation
-from os import mkdir
+from knowledge.relation import get_relation_import_statement, \
+                               write_relation, \
+                               Relation
+from os import mkdir, environ
 from os.path import join
 from pathlib import Path
 from shutil import rmtree
+
+SOURCE_PATH_KEY = 'OX_SOURCE_PATH'
 
 
 class TestSelfWriting(unittest.TestCase):
@@ -74,6 +79,8 @@ class TestSelfWriting(unittest.TestCase):
     def test_export_populator(self):
         knowledge_base1 = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base1)
+        new_relation = Relation('likes', (Myself(), Adele(), 1000))
+        knowledge_base1.relations.append(new_relation)
         knowledge_base2 = generate_copy(knowledge_base1, 'test_output')
         self.assertTrue(knowledge_base1.matches(knowledge_base2))
         knowledge_base3 = generate_copy(knowledge_base2, 'test_output')
@@ -81,7 +88,9 @@ class TestSelfWriting(unittest.TestCase):
 
  
 def generate_copy(knowledge_base, path):
-    unique_id = create_knowledge_package(path)
+    unique_id = create_unique_package(path)
+    source_path = environ[SOURCE_PATH_KEY]
+    copy_knowledge_package(source_path, join(path, unique_id))
     knowledge_directory_path = join(path, unique_id, 'knowledge')
     knowledge_base.export_populator(knowledge_directory_path)
     populator_module_path = to_package_path(knowledge_directory_path) + \
