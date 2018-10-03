@@ -63,7 +63,7 @@ class TestUtils(unittest.TestCase):
         source_knowledge_path = join(source_path, 'knowledge')
         with open(join(source_knowledge_path, 'file1.txt'), 'w') as sf1:
             sf1.write('foo')
-        source_dir1_path = join('source_knowledge_path', 'dir1')
+        source_dir1_path = join(source_knowledge_path, 'dir1')
         makedirs(source_dir1_path)
         with open(join(source_dir1_path, 'file2.txt'), 'w') as sf2:
             sf2.write('bar')
