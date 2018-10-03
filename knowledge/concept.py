@@ -45,12 +45,7 @@ class Concept:
         return 'UndefinedConceptType'
 
     def write(self, path):
-        # TODO: this bit is shared with KnowledgeBase.export_populator
-        knowledge_path = join(path, 'knowledge')
-        makedirs(knowledge_path)
-        Path(join(knowledge_path, '__init__.py')).touch()
-
-        module_path = join(knowledge_path, self.get_module_name()) + '.py'
+        module_path = join(path, self.get_module_name()) + '.py'
         concept_type = self.get_concept_type()
         with open(module_path, 'w') as module_file:
             pass # TODO
