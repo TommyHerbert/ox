@@ -4,6 +4,7 @@ from pathlib import Path
 from uuid import uuid4
 
 
+# TODO: this one will become obsolete
 def create_knowledge_package(path):
     unique_id = str(uuid4())
     knowledge_path = join(path, unique_id, 'knowledge')
@@ -12,4 +13,16 @@ def create_knowledge_package(path):
     Path(join(path, unique_id, '__init__.py')).touch()
     Path(join(knowledge_path, '__init__.py')).touch()
     return unique_id
+
+
+def create_unique_package(path):
+    pass # TODO
+
+
+def create_empty_knowledge_package(path):
+    pass # TODO
+
+
+def copy_knowledge_package(source, target):
+    pass # TODO: shutil.copytree
 
