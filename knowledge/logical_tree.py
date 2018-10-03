@@ -24,3 +24,4 @@ class LogicalTreeLeaf(LogicalTree):
 
 def write_logical_tree(path):
     pass # TODO
+
