@@ -16,7 +16,11 @@ def create_knowledge_package(path):
 
 
 def create_unique_package(path):
-    pass # TODO
+    unique_id = str(uuid4())
+    extended_path = join(path, unique_id)
+    makedirs(extended_path)
+    Path(join(extended_path, '__init__.py')).touch()
+    return unique_id
 
 
 def create_empty_knowledge_package(path):
