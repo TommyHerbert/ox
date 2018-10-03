@@ -2,6 +2,7 @@ from os import makedirs
 from os.path import join
 from pathlib import Path
 from uuid import uuid4
+from shutil import copytree
 
 
 # TODO: this one will become obsolete
@@ -24,9 +25,10 @@ def create_unique_package(path):
 
 
 def create_empty_knowledge_package(path):
-    pass # TODO
+    makedirs(join(path, 'knowledge'))
+    Path(join(path, 'knowledge', '__init__.py')).touch()
 
 
 def copy_knowledge_package(source, target):
-    pass # TODO: shutil.copytree
+    copytree(join(source, 'knowledge'), join(target, 'knowledge'))
 
