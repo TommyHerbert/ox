@@ -48,21 +48,17 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(is_package(join(path, 'knowledge')))
 
     def test_create_unique_package(self):
-        unique_id = create_unique_package(OUTPUT_DIR)
-        path = join(OUTPUT_DIR, unique_id)
+        path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
         self.assertTrue(is_package(path))
 
     def test_create_empty_knowledge_package(self):
-        unique_id = create_unique_package(OUTPUT_DIR)
-        path = join(OUTPUT_DIR, unique_id)
+        path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
         create_empty_knowledge_package(path)
         self.assertTrue(is_package(join(path, 'knowledge')))
 
     def test_copy_knowledge_package(self):
-        source_id = create_unique_package(OUTPUT_DIR)
-        target_id = create_unique_package(OUTPUT_DIR)
-        source_path = join(OUTPUT_DIR, source_id)
-        target_path = join(OUTPUT_DIR, target_id)
+        source_path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
+        target_path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
         create_empty_knowledge_package(source_path)
         source_knowledge_path = join(source_path, 'knowledge')
         with open(join(source_knowledge_path, 'file1.txt'), 'w') as sf1:
