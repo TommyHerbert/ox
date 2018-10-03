@@ -40,6 +40,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual([3, 2, 1], list1)
         self.assertEqual([1, 2, 3], list2)
 
+    # TODO: this one will become obsolete
     def test_create_knowledge_package(self):
         unique_id = create_knowledge_package(OUTPUT_DIR)
         path = join(OUTPUT_DIR, unique_id)
