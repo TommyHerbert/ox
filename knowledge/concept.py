@@ -42,10 +42,10 @@ class Concept:
         return headline_to_snake(self.get_class_name())
     
     def get_import_statement(self, path=''):
-        package = to_package_path(path) # TODO: get rid of optional param?
+        package = to_package_path(path, final_dot=True)
         module = self.get_module_name()
         class_name = self.get_class_name()
-        return 'from {}.{} import {}'.format(package, module, class_name)
+        return 'from {}{} import {}'.format(package, module, class_name)
 
     def get_instantiation_statement(self):
         return '{} = {}()'.format(self.get_module_name(),
