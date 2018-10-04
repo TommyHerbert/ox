@@ -15,3 +15,6 @@ class Question(Category):
     def get_question_logic(self, input_string, reader):
         return None
 
+    def overwrite_copy(self, path):
+        pass # don't generate this concept from the default template
+
