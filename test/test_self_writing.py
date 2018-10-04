@@ -72,9 +72,10 @@ class TestSelfWriting(unittest.TestCase):
         self.assertEqual('Category', Singer().get_concept_type())
 
     def test_write_concept(self):
+        create_dummy_thing_class('test_output')
         Adele().write('test_output')
         from test_output.adele import Adele as Adele2
-        self.assertEqual('Adele', Adele2().get_lexical_form())
+        self.assertEqual('Adele', Adele2().lexical_form)
 
     def test_export_populator(self):
         knowledge_base1 = KnowledgeBase()
@@ -85,6 +86,11 @@ class TestSelfWriting(unittest.TestCase):
         self.assertTrue(knowledge_base1.matches(knowledge_base2))
         knowledge_base3 = generate_copy(knowledge_base2, 'test_output')
         self.assertTrue(knowledge_base1.matches(knowledge_base3))
+
+
+def create_dummy_thing_class(path):
+    with open(join(path, 'concept.py'), 'w') as f:
+        f.write('class Thing:\n    pass\n')
 
  
 def generate_copy(knowledge_base, path):

@@ -45,10 +45,22 @@ class Concept:
         return 'UndefinedConceptType'
 
     def write(self, path):
-        module_path = join(path, self.get_module_name()) + '.py'
+        template = """from {package_path}.concept import {concept_type}
+
+
+class {class_name}({concept_type}):
+    def __init__(self):
+        {concept_type}.__init__(self)
+        self.lexical_form = '{lexical_form}'
+
+"""
+        file_path = join(path, self.get_module_name()) + '.py'
+        package_path = to_package_path(path)
         concept_type = self.get_concept_type()
-        with open(module_path, 'w') as module_file:
-            pass # TODO
+        class_name = self.get_class_name()
+        lexical_form = self.get_lexical_form()
+        with open(file_path, 'w') as f:
+            f.write(template.format(**vars()))
 
 
 class Category(Concept):
