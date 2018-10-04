@@ -47,7 +47,7 @@ def has_lexical_form(relation, lexical_form):
 
 
 def get_relation_import_statement(path=''):
-    template = 'from {}knowledge.relation import Relation'
+    template = 'from {}relation import Relation'
     return template.format(to_package_path(path, final_dot=True))
 
 def write_relation(path):
