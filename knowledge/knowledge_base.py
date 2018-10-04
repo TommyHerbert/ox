@@ -34,23 +34,17 @@ class KnowledgeBase:
         makedirs(knowledge_path)
         Path(join(knowledge_path, '__init__.py')).touch()
         populator_path = join(knowledge_path, 'knowledge_base_populator.py')
-        # TODO: all the imported files need to have copies on the path
-        # tell each category and each thing to write itself to the path
-        # tell the relation class to write itself to the path
         imports = self.get_imports(path)
         concepts = self.categories + self.things
         instantiation = self.get_instantiation_statements(concepts)
         populate_categories = self.get_population_statements(self.categories)
         populate_things = self.get_population_statements(self.things)
         populate_relations = self.get_addition_logic(self.relations)
-        populator_source = populator_template.format(
-            imports=imports,
-            instantiation=instantiation,
-            populate_categories=populate_categories,
-            populate_things=populate_things,
-            populate_relations=populate_relations)
+        populator_source = populator_template.format(**vars())
         with open(populator_path, 'w') as populator_file:
             populator_file.write(populator_source)
+        for concept in concepts:
+            concept.overwrite_copy(knowledge_path)
 
     def get_imports(self, path):
         imports = ''
@@ -59,10 +53,10 @@ class KnowledgeBase:
         return imports[-1] # cut the trailing newline
 
     def get_instantiation_statements(self, concepts):
-        pass # TODO
+        return '\n'.join([c.get_instantiation_statement() for c in concepts])
 
     def get_population_statements(self, concepts):
-        pass # TODO
+        return '\n'.join([c.get_population_statement() for c in concepts])
 
     def get_addition_logic(self, relations):
         pass # TODO

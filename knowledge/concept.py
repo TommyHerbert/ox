@@ -51,6 +51,9 @@ class Concept:
         return '{} = {}()'.format(self.get_module_name(),
                                   self.get_class_name())
 
+    def get_population_statement(self):
+        raise NotImplementedError()
+
     def get_concept_type(self):
         return 'UndefinedConceptType'
 
@@ -71,6 +74,10 @@ class Category(Concept):
     def get_concept_type(self):
         return 'Category'
 
+    def get_population_statement(self):
+        template = 'knowledge_base.categories.append({})'
+        return template.format(self.get_module_name())
+
 
 class Thing(Concept):
     def __init__(self):
@@ -78,4 +85,8 @@ class Thing(Concept):
 
     def get_concept_type(self):
         return 'Thing'
+
+    def get_population_statement(self):
+        template = 'knowledge_base.things.append({})'
+        return template.format(self.get_module_name())
 
