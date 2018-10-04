@@ -44,7 +44,7 @@ class Concept:
     def get_concept_type(self):
         return 'UndefinedConceptType'
 
-    def write(self, path):
+    def overwrite_copy(self, path):
         template = """from {package_path}.concept import {concept_type}
 
 

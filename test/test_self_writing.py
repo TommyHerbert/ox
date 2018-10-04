@@ -71,9 +71,9 @@ class TestSelfWriting(unittest.TestCase):
         self.assertEqual('Thing', Adele().get_concept_type())
         self.assertEqual('Category', Singer().get_concept_type())
 
-    def test_write_concept(self):
+    def test_overwrite_copy(self):
         create_dummy_thing_class('test_output')
-        Adele().write('test_output')
+        Adele().overwrite_copy('test_output')
         from test_output.adele import Adele as Adele2
         self.assertEqual('Adele', Adele2().lexical_form)
 
