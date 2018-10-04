@@ -3,6 +3,16 @@ from utils.paths import to_package_path
 from knowledge.logical_tree import LogicalTreeLeaf
 from os.path import normpath, sep, join
 
+template = """from {package_path}.concept import {concept_type}
+
+
+class {class_name}({concept_type}):
+    def __init__(self):
+        {concept_type}.__init__(self)
+        self.lexical_form = '{lexical_form}'
+
+"""
+
 
 class Concept:
     def __init__(self):
@@ -45,15 +55,6 @@ class Concept:
         return 'UndefinedConceptType'
 
     def overwrite_copy(self, path):
-        template = """from {package_path}.concept import {concept_type}
-
-
-class {class_name}({concept_type}):
-    def __init__(self):
-        {concept_type}.__init__(self)
-        self.lexical_form = '{lexical_form}'
-
-"""
         file_path = join(path, self.get_module_name()) + '.py'
         package_path = to_package_path(path)
         concept_type = self.get_concept_type()
