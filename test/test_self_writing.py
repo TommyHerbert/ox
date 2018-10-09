@@ -8,9 +8,7 @@ from knowledge.adele import Adele
 from knowledge.singer import Singer
 from knowledge.knowledge_base import KnowledgeBase
 from knowledge.knowledge_base_populator import KnowledgeBasePopulator
-from knowledge.relation import get_relation_import_statement, \
-                               write_relation, \
-                               Relation
+from knowledge.relation import get_relation_import_statement, Relation
 from os import mkdir, environ
 from os.path import join
 from pathlib import Path

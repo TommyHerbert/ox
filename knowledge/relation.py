@@ -1,6 +1,10 @@
 from os.path import normpath, sep
 from utils.paths import to_package_path
 
+ADDITION_METHOD = 'def_add_relation(name, args):{separator}' + \
+                  '{container_name}.relations' + \
+                  '.append(Relation(name, args))'
+
 
 class Relation:
     def __init__(self, relation_type, arguments):
@@ -35,6 +39,11 @@ class Relation:
             return True
         return False
 
+    def get_addition_statement(self):
+        template = "add_relation('{}', ({}))"
+        arguments = [argument_to_string(a) for a in self.arguments]
+        return template.format(self.relation_type, ', '.join(arguments))
+
 
 def has_lexical_form(relation, lexical_form):
     for argument in relation.arguments:
@@ -50,6 +59,11 @@ def get_relation_import_statement(path=''):
     template = 'from {}relation import Relation'
     return template.format(to_package_path(path, final_dot=True))
 
-def write_relation(path):
-    pass # TODO
+def argument_to_string(argument):
+    if type(argument) == int:
+        return str(argument)
+    return argument.get_module_name()
+
+def get_add_relation_method(container_name, separator):
+    return ADDITION_METHOD.format(**locals())
 
