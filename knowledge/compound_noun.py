@@ -8,20 +8,20 @@ class CompoundNoun(Category):
     def __init__(self):
         pass
 
-    def get_logical_form(self, input_string, reader):
+    def get_logical_form(self, input_string, knowledge_base, reader):
         words = input_string.split()
         if len(words) != 2:
             return None
-        category = reader.parse(words[1])
+        category = reader.parse(words[1], knowledge_base)
         if not category:
             return None
-        find_referents = partial(self.find_referents, words[0], reader)
+        find_referents = partial(self.find_referents, words[0], knowledge_base)
         return LogicalTreeBranch(find_referents, [category])
 
-    def find_referents(self, qualifier_string, reader, category):
+    def find_referents(self, qualifier_string, knowledge_base, category):
         def instance(r):
             return r.relation_type == 'is_a' and r.arguments[1] == category
-        relations = reader.get_relations()
+        relations = knowledge_base.relations
         instances = [r.arguments[0] for r in relations if instance(r)]
         related = lambda i: self.is_related(i, qualifier_string, relations)
         return [i for i in instances if related(i)]

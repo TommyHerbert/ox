@@ -11,13 +11,16 @@ class Mind:
         self.ox = Speaker.find_by_email('project.ox.mail@gmail.com')
         self.knowledge_base = KnowledgeBase()
         KnowledgeBasePopulator.populate(self.knowledge_base)
-        self.reader = Reader(self.knowledge_base)
+        self.reader = Reader()
         self.conversation_strategy = NaiveConversationStrategy()
         self.reasoner = Reasoner()
         self.expresser = Expresser()
 
     def start_conversation(self, conversation):
         conversation.speakers.append(self.ox)
+        knowledge_base = KnowledgeBase()
+        KnowledgeBasePopulator.populate(knowledge_base)
+        conversation.context['knowledge_base'] = knowledge_base
         utterance = Utterance(speaker=self.ox, text='Hello, my name is Ox.')
         conversation.add_utterance(utterance)
 

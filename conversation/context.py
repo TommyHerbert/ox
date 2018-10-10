@@ -6,6 +6,10 @@ class ContextElement:
     def is_expectation():
         return False
 
+    @staticmethod
+    def element_type():
+        return None
+
 
 class Expectation(ContextElement):
     def __init__(self, content):
@@ -16,7 +20,16 @@ class Expectation(ContextElement):
     def is_expectation():
         return True
 
+    @staticmethod
+    def element_type():
+        return 'expectations'
+
 
 class Proposition(ContextElement):
     def __init__(self):
         ContextElement.__init__(self)
+
+    @staticmethod
+    def element_type():
+        return 'propositions'
+

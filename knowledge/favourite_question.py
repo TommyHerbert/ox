@@ -10,12 +10,12 @@ class FavouriteQuestion(Question):
     def __init__(self):
         Question.__init__(self)
 
-    def get_question_logic(self, input_string, reader):
+    def get_question_logic(self, input_string, knowledge_base, reader):
         category_string = self.get_category_string(input_string)
         if not category_string:
             return None
-        category = reader.parse(category_string)
-        favourite = partial(self.find_favourite, reader)
+        category = reader.parse(category_string, knowledge_base)
+        favourite = partial(self.find_favourite, knowledge_base)
         return LogicalTreeBranch(favourite, [category])
 
     @staticmethod
@@ -23,8 +23,8 @@ class FavouriteQuestion(Question):
         match = re.match("What's your favourite (.+)\?", input_string)
         return match.group(1) if match else None
 
-    def find_favourite(self, reader, category):
-        relations = reader.get_relations()
+    def find_favourite(self, knowledge_base, category):
+        relations = knowledge_base.relations
         instances = category
         def relevant(r):
             return r.relation_type == 'is_a' and r.arguments[1] == category

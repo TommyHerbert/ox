@@ -135,7 +135,8 @@ class Conversation(db.Model):
     @staticmethod
     def create():
         conversation = Conversation()
-        conversation.context = []
+        conversation.context = \
+            {'expectations': [], 'propositions': [], 'knowledge_base': None}
         db.session.add(conversation)
         return conversation
 

@@ -21,7 +21,10 @@ class Concept:
     def get_lexical_form(self):
         return self.lexical_form
 
-    def get_logical_form(self, input_string=None, reader=None):
+    def get_logical_form(self,
+                         input_string=None,
+                         knowledge_base=None,
+                         reader=None):
         if input_string in [None, self.lexical_form]:
             return LogicalTreeLeaf(self)
         else:

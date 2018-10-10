@@ -1,6 +1,8 @@
 from app.models import Utterance, Conversation, Speaker
 from app import db
 from datetime import datetime, timedelta
+from knowledge.knowledge_base import KnowledgeBase
+from knowledge.knowledge_base_populator import KnowledgeBasePopulator
 
 for u in Utterance.query.all():
     db.session.delete(u)
@@ -22,7 +24,10 @@ conversation_start = datetime.utcnow() - timedelta(seconds=2)
 conversation = Conversation(timestamp=conversation_start)
 conversation.speakers.append(ox)
 conversation.speakers.append(thomas)
-conversation.context = []
+knowledge_base = KnowledgeBase()
+KnowledgeBasePopulator.populate(knowledge_base)
+conversation.context = \
+    {'expectations': [], 'propositions': [], 'knowledge_base': knowledge_base}
 db.session.add(conversation)
 
 u1 = Utterance(speaker=ox,

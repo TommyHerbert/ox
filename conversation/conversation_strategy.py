@@ -9,10 +9,14 @@ class NaiveConversationStrategy:
     def construct_move(context, source_path):
         if not context:
             return NaiveConversationStrategy._didnt_understand()
-        for i in range(len(context)):
-            element = context[i]
+        '''
+        TODO: maybe now that expectations are stored separately,
+        this can be simpler
+        '''
+        for i in range(len(context['expectations'])):
+            element = context['expectations'][i]
             if element.is_expectation():
-                del context[i]
+                del context['expectations'][i]
                 return element.content
         return NaiveConversationStrategy._didnt_understand()
 
