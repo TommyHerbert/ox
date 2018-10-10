@@ -6,7 +6,7 @@ class NaiveConversationStrategy:
         pass
 
     @staticmethod
-    def pop_move(context, source_path):
+    def construct_move(context, source_path):
         if not context:
             return NaiveConversationStrategy._didnt_understand()
         for i in range(len(context)):

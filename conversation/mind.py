@@ -23,7 +23,7 @@ class Mind:
 
     def continue_conversation(self, conversation, source_path):
         self.reader.read_last_move(conversation)
-        next_move = self.strategy.pop_move(conversation.context, source_path)
+        next_move = self.strategy.construct_move(conversation.context, source_path)
         answer_concept = self.reasoner.take_move(next_move)
         text = self.expresser.express(answer_concept)
         conversation.add_utterance(Utterance(speaker=self.ox, text=text))
