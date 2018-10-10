@@ -6,7 +6,7 @@ from shutil import copytree
 
 
 def create_unique_package(path):
-    unique_id = str(uuid4())
+    unique_id = 'p' + str(uuid4()).replace('-', '_')
     extended_path = join(path, unique_id)
     makedirs(extended_path)
     Path(join(extended_path, '__init__.py')).touch()

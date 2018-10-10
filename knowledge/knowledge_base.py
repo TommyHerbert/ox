@@ -4,7 +4,8 @@ from os import makedirs
 from pathlib import Path
 from utils.paths import to_package_path
 from utils.lists import sorted_copy
-from knowledge.relation import get_add_relation_method
+from knowledge.relation \
+    import get_add_relation_method, get_relation_import_statement
 
 populator_template = '''{imports}
 
@@ -32,12 +33,9 @@ class KnowledgeBase:
         return self.categories + self.things + self.relations == []
     
     def export_populator(self, path):
-        knowledge_path = join(path, 'knowledge')
-        makedirs(knowledge_path)
-        Path(join(knowledge_path, '__init__.py')).touch()
-        populator_path = join(knowledge_path, 'knowledge_base_populator.py')
+        populator_path = join(path, 'knowledge_base_populator.py')
         separator = '\n' + 8 * ' '
-        imports = self.get_imports(path, separator)
+        imports = self.get_imports(path)
         concepts = self.categories + self.things
         instantiation = self.get_instantiation_statements(concepts, separator)
         populate_categories = \
@@ -49,11 +47,13 @@ class KnowledgeBase:
         with open(populator_path, 'w') as populator_file:
             populator_file.write(populator_source)
         for concept in concepts:
-            concept.overwrite_copy(knowledge_path)
+            concept.overwrite_copy(path)
 
-    def get_imports(self, path, separator):
+    def get_imports(self, path):
         concepts = self.categories + self.things
-        return separator.join([c.get_import_statement(path) for c in concepts])
+        imports = [c.get_import_statement(path) for c in concepts]
+        imports.append(get_relation_import_statement(path))
+        return '\n'.join(imports)
 
     def get_instantiation_statements(self, concepts, separator):
         statements = [c.get_instantiation_statement() for c in concepts]

@@ -1,7 +1,7 @@
 from os.path import normpath, sep
 from utils.paths import to_package_path
 
-ADDITION_METHOD = 'def_add_relation(name, args):{separator}' + \
+ADDITION_METHOD = 'def add_relation(name, args):{separator}    ' + \
                   '{container_name}.relations' + \
                   '.append(Relation(name, args))'
 

@@ -31,7 +31,7 @@ class Concept:
         return self.__class__.__name__
 
     def __eq__(self, other):
-        if not isinstance(other, Concept):
+        if type(other) == int:
             return False
         return self.get_class_name() == other.get_class_name()
 
