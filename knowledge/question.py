@@ -10,7 +10,6 @@ class Question(Category):
                          input_string=None,
                          knowledge_base=None,
                          reader=None):
-        # TODO: what is this check for?
         if None in [input_string, knowledge_base, reader]:
             return None
         question_logic = \
