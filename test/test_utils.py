@@ -4,6 +4,7 @@ from utils.lists import sorted_copy
 from utils.knowledge import create_unique_package, \
                             create_empty_knowledge_package, \
                             copy_knowledge_package
+from utils.case import phrase_to_headline
 from os import makedirs
 from os.path import join, exists, isdir, isfile
 from shutil import rmtree
@@ -64,6 +65,11 @@ class TestUtils(unittest.TestCase):
             self.assertEqual('foo', tf1.read())
         with open(join(target_path, 'knowledge', 'dir1', 'file2.txt')) as tf2:
             self.assertEqual('bar', tf2.read())
+
+    def test_phrase_to_headline(self):
+        self.assertEqual('Adele', phrase_to_headline('Adele'))
+        self.assertEqual('Song', phrase_to_headline('song'))
+        self.assertEqual('ShapeOfYou', phrase_to_headline('Shape of You'))
 
 
 def is_package(path):
