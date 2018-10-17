@@ -4,8 +4,7 @@ from os import makedirs
 from pathlib import Path
 from utils.paths import to_package_path
 from utils.lists import sorted_copy
-from knowledge.relation \
-    import get_add_relation_method, get_relation_import_statement
+from knowledge.relation import get_relation_import_statement, Relation
 
 populator_template = '''{imports}
 
@@ -63,13 +62,13 @@ class KnowledgeBase:
         return separator.join([c.get_population_statement() for c in concepts])
 
     def get_addition_logic(self, relations, separator):
-        # TODO: factor out 'knowledge_base' string here and in template
-        blocks = [get_add_relation_method('knowledge_base', separator)]
-        blocks += [r.get_addition_statement() for r in relations]
-        return separator.join(blocks)
+        return separator.join([r.get_addition_statement() for r in relations])
 
     def matches(self, other):
         return sorted_copy(self.categories) == sorted_copy(other.categories) \
            and sorted_copy(self.things) == sorted_copy(other.things) \
            and sorted_copy(self.relations) == sorted_copy(other.relations)
+
+    def add_relation(self, name, arguments):
+        self.relations.append(Relation(name, arguments))
 

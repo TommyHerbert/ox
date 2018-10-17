@@ -37,13 +37,11 @@ class KnowledgeBasePopulator:
         knowledge_base.things.append(someone_like_you)
 
         # populate relations
-        def add_relation(name, args):
-            knowledge_base.relations.append(Relation(name, args))
-        add_relation('is_a', (adele, singer))
-        add_relation('is_a', (hello, song))
-        add_relation('is_a', (someone_like_you, song))
-        add_relation('sang', (adele, hello))
-        add_relation('sang', (adele, someone_like_you))
-        add_relation('likes', (myself, hello, 1000))
-        add_relation('likes', (myself, someone_like_you, 900))
+        knowledge_base.add_relation('is_a', (adele, singer))
+        knowledge_base.add_relation('is_a', (hello, song))
+        knowledge_base.add_relation('is_a', (someone_like_you, song))
+        knowledge_base.add_relation('sang', (adele, hello))
+        knowledge_base.add_relation('sang', (adele, someone_like_you))
+        knowledge_base.add_relation('likes', (myself, hello, 1000))
+        knowledge_base.add_relation('likes', (myself, someone_like_you, 900))
 

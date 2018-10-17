@@ -1,3 +1,4 @@
+from knowledge.concept import Thing
 from knowledge.statement import Statement
 import re
 from functools import partial
@@ -36,7 +37,4 @@ class CopularStatement(Statement):
         thing = new_thing_type()
         thing.lexical_form = instance_name
         return thing
-
-    def overwrite_copy(self, path):
-        pass # don't generate this concept from the default template
 
