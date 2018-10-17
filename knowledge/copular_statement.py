@@ -14,10 +14,11 @@ class CopularStatement(Statement):
         arguments = self.get_arguments(input_string)
         if not arguments:
             return None
-        category = reader.parse(arguments[1], knowledge_base)
-        if not category:
+        category_leaf = reader.parse(arguments[1], knowledge_base)
+        if not category_leaf:
             return None
         copular = partial(self.add_belief, knowledge_base)
+        category = category_leaf.content
         return LogicalTreeBranch(copular, [arguments[0], category])
 
     @staticmethod
