@@ -73,3 +73,6 @@ class KnowledgeBase:
            and sorted_copy(self.things) == sorted_copy(other.things) \
            and sorted_copy(self.relations) == sorted_copy(other.relations)
 
+    def copy(self):
+        pass # TODO
+
