@@ -11,6 +11,12 @@ def headline_to_snake(headline_input):
     return '_'.join(_tokenise_headline(headline_input)).lower()
 
 
+def phrase_to_headline(phrase_input):
+    words = phrase_input.split(' ')
+    capitalised_words = [word[0].upper() + word[1:] for word in words]
+    return ''.join(capitalised_words)
+
+
 def _tokenise_headline(headline_input):
     remaining_input = headline_input
     tokens = []
