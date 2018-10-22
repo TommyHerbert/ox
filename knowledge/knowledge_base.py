@@ -70,7 +70,11 @@ class KnowledgeBase:
            and sorted_copy(self.relations) == sorted_copy(other.relations)
 
     def copy(self):
-        pass # TODO
+        new_knowledge_base = KnowledgeBase()
+        new_knowledge_base.things = list(self.things)
+        new_knowledge_base.categories = list(self.categories)
+        new_knowledge_base.relations = list(self.relations)
+        return new_knowledge_base
 
     def add_relation(self, name, arguments):
         self.relations.append(Relation(name, arguments))
