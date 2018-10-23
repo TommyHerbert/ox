@@ -90,6 +90,6 @@ class Thing(Concept):
         return 'Thing'
 
     def get_population_statement(self):
-        template = 'knowledge_base.things.append({})'
+        template = 'knowledge_base.add_thing({})'
         return template.format(self.get_module_name())
 

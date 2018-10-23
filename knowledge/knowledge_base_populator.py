@@ -31,10 +31,10 @@ class KnowledgeBasePopulator:
         knowledge_base.categories.append(favourite_question)
 
         # populate things
-        knowledge_base.things.append(myself)
-        knowledge_base.things.append(adele)
-        knowledge_base.things.append(hello)
-        knowledge_base.things.append(someone_like_you)
+        knowledge_base.add_thing(myself)
+        knowledge_base.add_thing(adele)
+        knowledge_base.add_thing(hello)
+        knowledge_base.add_thing(someone_like_you)
 
         # populate relations
         knowledge_base.add_relation('is_a', (adele, singer))
