@@ -28,7 +28,7 @@ class CopularStatement(Statement):
 
     def add_belief(self, knowledge_base, instance_name, category):
         thing = self.make_thing(instance_name)
-        knowledge_base.things.append(thing)
+        knowledge_base.add_thing(thing)
         knowledge_base.add_relation('is_a', [thing, category])
 
     @staticmethod

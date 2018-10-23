@@ -76,6 +76,10 @@ class KnowledgeBase:
         new_knowledge_base.relations = list(self.relations)
         return new_knowledge_base
 
+    def add_thing(self, thing):
+        if thing not in self.things:
+            self.things.append(thing)
+
     def add_relation(self, name, arguments):
         self.relations.append(Relation(name, arguments))
 

@@ -16,6 +16,14 @@ class TestKnowledgeBase(unittest.TestCase):
         del knowledge_base1.things[0]
         self.assertFalse(knowledge_base1.matches(knowledge_base2))
 
+    def test_add_thing(self):
+        knowledge_base = KnowledgeBase()
+        adele = Adele()
+        knowledge_base.add_thing(adele)
+        self.assertIn(adele, knowledge_base.things)
+        knowledge_base.add_thing(adele)
+        self.assertEqual(1, len(knowledge_base.things)) # no duplicates
+
     def test_add_relation(self):
         knowledge_base = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base)
