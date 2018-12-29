@@ -29,10 +29,12 @@ def get_droplets(balancer_id, headers):
     print('time after getting droplets: ' + get_time_string())
 
 
-class RemovalThread()
-
-
 def run(balancer_id, droplet_id, headers):
-    print 'starting removal thread'
-    
+    removal_args = (balancer_id, droplet_id, headers)
+    retrieval_args = (balancer_id, headers)
+    print('starting removal thread')
+    Thread(target=remove_droplet, args=removal_args).start()
+    print('started removal thread\nstarting retrieval thread')
+    Thread(target=get_droplets, args = retrieval_args).start()
+    print('started retrieval thread')
 
