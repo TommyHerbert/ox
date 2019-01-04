@@ -41,6 +41,9 @@ class Concept:
     def __lt__(self, other):
         return self.get_class_name() < other.get_class_name()
 
+    def __hash__(self):
+        return hash(self.get_class_name())
+
     def get_module_name(self):
         return headline_to_snake(self.get_class_name())
     

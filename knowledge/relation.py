@@ -35,6 +35,9 @@ class Relation:
             return True
         return False
 
+    def __hash__(self):
+        return hash((self.relation_type,) + tuple(self.arguments))
+
     def get_addition_statement(self):
         template = "knowledge_base.add_relation('{}', ({}))"
         arguments = [argument_to_string(a) for a in self.arguments]

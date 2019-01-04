@@ -3,7 +3,7 @@ from os.path import join
 from os import makedirs
 from pathlib import Path
 from utils.paths import to_package_path
-from utils.lists import sorted_copy
+from utils.lists import sorted_copy, merge_lists
 from knowledge.relation import get_relation_import_statement, Relation
 
 populator_template = '''{imports}
@@ -82,4 +82,12 @@ class KnowledgeBase:
 
     def add_relation(self, name, arguments):
         self.relations.append(Relation(name, arguments))
+
+    def merge(self, other):
+        merged = KnowledgeBase()
+        # TODO: Would be nicer to store these lists as sets?
+        merged.categories = merge_lists(self.categories, other.categories)
+        merged.things = merge_lists(self.things, other.things)
+        merged.relations = merge_lists(self.relations, other.relations)
+        return merged
 
