@@ -18,16 +18,13 @@ USAGE = 'usage: python cds1.py <authorization token> ' + \
 if len(argv) != 4:
     print(USAGE)
 else:
+    # TODO: logging and error handling
     token, balancer_id, droplet_id = argv[1:]
     path_prefix = 'https://api.digitalocean.com/v2/load_balancers/'
     path = path_prefix + balancer_id
     headers = {'Authorization': 'Bearer ' + token}
     while count_droplets(path, headers) <= MINIMUM_HOSTS:
-        print('Insufficient droplets in load balancer pool. Waiting for more.')
         sleep(5)
-    print('There are now enough droplets. Removing this one.')
     json = {'droplet_ids': [droplet_id]}
     delete(path + '/droplets', headers=headers, json=json)
-    # TODO: error handling
-    print('Done.')
 
