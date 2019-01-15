@@ -1,3 +1,5 @@
+print('starting cds1.py')
+
 from sys import argv
 from requests import get, delete
 from json import loads
@@ -28,3 +30,4 @@ else:
     json = {'droplet_ids': [droplet_id]}
     delete(path + '/droplets', headers=headers, json=json)
 
+print('cds1.py completed')
