@@ -82,6 +82,10 @@ class TestKnowledgeBase(unittest.TestCase):
 
         self.assertTrue(expected.matches(base1.merge(base2)))
 
+    '''
+    TODO: This doesn't test the writing of knowledge bases that have
+    changed since population.
+    '''
     def test_write_package(self):
         makedirs(OUTPUT_DIR)
         Path(join(OUTPUT_DIR, '__init__.py')).touch()
@@ -92,7 +96,8 @@ class TestKnowledgeBase(unittest.TestCase):
         TODO: is there any way of deriving the package name from the
         value of OUTPUT_DIR?
         '''
-        from utils_test_output import knowledge as knowledge2
-        copied_base = knowledge2.KnowledgeBase()
-        knowledge2.KnowledgeBasePopulator.populate(copied_base)
+        import utils_test_output.knowledge.knowledge_base as knowledge_base2
+        import utils_test_output.knowledge.knowledge_base_populator as populator2
+        copied_base = knowledge_base2.KnowledgeBase()
+        populator2.KnowledgeBasePopulator.populate(copied_base)
         self.assertTrue(knowledge_base.matches(copied_base))
