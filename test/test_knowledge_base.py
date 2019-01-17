@@ -7,9 +7,10 @@ from knowledge.adele import Adele
 from knowledge.hello import Hello
 from knowledge.singer import Singer
 from knowledge.song import Song
-from os.path import exists
+from os import makedirs
+from os.path import exists, join
 from shutil import rmtree
-from utils.knowledge import create_empty_knowledge_package
+from pathlib import Path
 
 OUTPUT_DIR = 'utils_test_output'
 
@@ -82,7 +83,8 @@ class TestKnowledgeBase(unittest.TestCase):
         self.assertTrue(expected.matches(base1.merge(base2)))
 
     def test_write_package(self):
-        create_empty_knowledge_package(OUTPUT_DIR)
+        makedirs(OUTPUT_DIR)
+        Path(join(OUTPUT_DIR, '__init__.py')).touch()
         knowledge_base = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base)
         knowledge_base.write_package(OUTPUT_DIR)
