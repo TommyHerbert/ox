@@ -7,9 +7,24 @@ from knowledge.adele import Adele
 from knowledge.hello import Hello
 from knowledge.singer import Singer
 from knowledge.song import Song
+from os.path import exists
+from shutil import rmtree
+from utils.knowledge import create_empty_knowledge_package
+
+OUTPUT_DIR = 'utils_test_output'
 
 
 class TestKnowledgeBase(unittest.TestCase):
+    def setUp(self):
+        self.clear_output()
+
+    def tearDown(self):
+        self.clear_output()
+
+    def clear_output(self):
+        if exists(OUTPUT_DIR):
+            rmtree(OUTPUT_DIR)
+
     def test_copy(self):
         knowledge_base1 = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base1)
@@ -66,3 +81,12 @@ class TestKnowledgeBase(unittest.TestCase):
 
         self.assertTrue(expected.matches(base1.merge(base2)))
 
+    def test_write_package(self):
+        create_empty_knowledge_package(OUTPUT_DIR)
+        knowledge_base = KnowledgeBase()
+        KnowledgeBasePopulator.populate(knowledge_base)
+        knowledge_base.write_package(OUTPUT_DIR)
+        from OUTPUT_DIR import knowledge as knowledge2
+        copied_base = knowledge2.KnowledgeBase()
+        knowledge2.KnowledgeBasePopulator.populate(copied_base)
+        self.assertTrue(knowledge_base.matches(copied_base))
