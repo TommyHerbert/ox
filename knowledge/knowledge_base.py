@@ -4,6 +4,7 @@ from os import makedirs
 from pathlib import Path
 from utils.paths import to_package_path
 from utils.lists import sorted_copy, merge_lists
+from utils.knowledge import copy_knowledge_package
 from knowledge.relation import get_relation_import_statement, Relation
 
 populator_template = '''{imports}
@@ -92,5 +93,4 @@ class KnowledgeBase:
         return merged
 
     def write_package(self, path):
-        pass # TODO
-
+        copy_knowledge_package('.', path)
