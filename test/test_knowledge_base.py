@@ -101,3 +101,10 @@ class TestKnowledgeBase(unittest.TestCase):
         copied_base = knowledge_base2.KnowledgeBase()
         populator2.KnowledgeBasePopulator.populate(copied_base)
         self.assertTrue(knowledge_base.matches(copied_base))
+
+    '''
+    TODO: create a knowledge base but don't use the populator: just give it a thing and a category and a relation
+    then write its knowledge package and import the written version and create and populate a knowledge base
+    from that and see if it matches the one you called write_package on
+    then you can get rid of the existing test_write_package, because this way is neater and tests more
+    ''' 
