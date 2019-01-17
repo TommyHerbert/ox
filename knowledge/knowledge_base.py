@@ -91,3 +91,6 @@ class KnowledgeBase:
         merged.relations = merge_lists(self.relations, other.relations)
         return merged
 
+    def write_package(self, path):
+        pass # TODO
+
