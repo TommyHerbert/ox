@@ -86,7 +86,11 @@ class TestKnowledgeBase(unittest.TestCase):
         knowledge_base = KnowledgeBase()
         KnowledgeBasePopulator.populate(knowledge_base)
         knowledge_base.write_package(OUTPUT_DIR)
-        from OUTPUT_DIR import knowledge as knowledge2
+        '''
+        TODO: is there any way of deriving the package name from the
+        value of OUTPUT_DIR?
+        '''
+        from utils_test_output import knowledge as knowledge2
         copied_base = knowledge2.KnowledgeBase()
         knowledge2.KnowledgeBasePopulator.populate(copied_base)
         self.assertTrue(knowledge_base.matches(copied_base))
