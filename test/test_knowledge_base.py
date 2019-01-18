@@ -6,6 +6,7 @@ from knowledge.myself import Myself
 from knowledge.adele import Adele
 from knowledge.hello import Hello
 from knowledge.singer import Singer
+from knowledge.concept import Thing
 from knowledge.song import Song
 from os import makedirs
 from os.path import exists, join
@@ -82,15 +83,20 @@ class TestKnowledgeBase(unittest.TestCase):
 
         self.assertTrue(expected.matches(base1.merge(base2)))
 
-    '''
-    TODO: This doesn't test the writing of knowledge bases that have
-    changed since population.
-    '''
-    def test_write_package(self):
+    def test_write_package2(self):
+        knowledge_base = KnowledgeBase()
+        def closer_init(closer_self):
+            Thing.__init__(closer_self)
+            self.lexical_form = 'Closer'
+        Closer = type('Closer', (Thing,), dict(__init__=closer_init))
+        closer = Closer()
+        knowledge_base.add_thing(closer)
+        song = Song()
+        knowledge_base.categories.append(song)
+        knowledge_base.add_relation('is_a', (closer, song))
+        
         makedirs(OUTPUT_DIR)
         Path(join(OUTPUT_DIR, '__init__.py')).touch()
-        knowledge_base = KnowledgeBase()
-        KnowledgeBasePopulator.populate(knowledge_base)
         knowledge_base.write_package(OUTPUT_DIR)
         '''
         TODO: is there any way of deriving the package name from the
@@ -102,9 +108,3 @@ class TestKnowledgeBase(unittest.TestCase):
         populator2.KnowledgeBasePopulator.populate(copied_base)
         self.assertTrue(knowledge_base.matches(copied_base))
 
-    '''
-    TODO: create a knowledge base but don't use the populator: just give it a thing and a category and a relation
-    then write its knowledge package and import the written version and create and populate a knowledge base
-    from that and see if it matches the one you called write_package on
-    then you can get rid of the existing test_write_package, because this way is neater and tests more
-    ''' 
