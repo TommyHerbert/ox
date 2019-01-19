@@ -87,7 +87,7 @@ class TestKnowledgeBase(unittest.TestCase):
         knowledge_base = KnowledgeBase()
         def closer_init(closer_self):
             Thing.__init__(closer_self)
-            self.lexical_form = 'Closer'
+            closer_self.lexical_form = 'Closer'
         Closer = type('Closer', (Thing,), dict(__init__=closer_init))
         closer = Closer()
         knowledge_base.add_thing(closer)

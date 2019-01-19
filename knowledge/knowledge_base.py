@@ -93,4 +93,10 @@ class KnowledgeBase:
         return merged
 
     def write_package(self, path):
+        # TODO: maybe the source path should be parametrised too
+        # the app knows about it somewhere (LearningStrategy?)
+        # and CDS could know about it and pass it in too
         copy_knowledge_package('.', path)
+        for concept in self.things + self.categories:
+            concept.overwrite_copy(path + '/knowledge')
+        self.export_populator(path + '/knowledge')
