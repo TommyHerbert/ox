@@ -7,8 +7,10 @@ if not path.exists(LOG_PATH):
 
 import logging
 
-logging.basicConfig(filename=LOG_PATH + '/cds2.log')
+logging.basicConfig(level=logging.INFO, filename=LOG_PATH + '/cds2.log')
+
+logging.info('started cds2')
 
 import knowledge
 
-logging.info('hello world')
+logging.info('completed cds2')
