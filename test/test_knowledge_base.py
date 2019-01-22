@@ -83,7 +83,7 @@ class TestKnowledgeBase(unittest.TestCase):
 
         self.assertTrue(expected.matches(base1.merge(base2)))
 
-    def test_write_package2(self):
+    def test_write_package(self):
         knowledge_base = KnowledgeBase()
         def closer_init(closer_self):
             Thing.__init__(closer_self)
@@ -102,8 +102,8 @@ class TestKnowledgeBase(unittest.TestCase):
         TODO: is there any way of deriving the package name from the
         value of OUTPUT_DIR?
         '''
-        import utils_test_output.knowledge.knowledge_base as knowledge_base2
-        import utils_test_output.knowledge.knowledge_base_populator as populator2
+        import utils_test_output.knowledge_base as knowledge_base2
+        import utils_test_output.knowledge_base_populator as populator2
         copied_base = knowledge_base2.KnowledgeBase()
         populator2.KnowledgeBasePopulator.populate(copied_base)
         self.assertTrue(knowledge_base.matches(copied_base))
