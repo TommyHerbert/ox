@@ -18,6 +18,7 @@ from time import sleep
 MINIMUM_HOSTS = 1
 
 
+# TODO: maybe don't use imported module names as local variables
 def count_droplets(path, headers):
     response = loads(get(path, headers=headers).text)
     logging.info('requested load balancer information from Digital Ocean')
