@@ -97,7 +97,7 @@ class TestKnowledgeBase(unittest.TestCase):
         
         makedirs(OUTPUT_DIR)
         Path(join(OUTPUT_DIR, '__init__.py')).touch()
-        knowledge_base.write_package(OUTPUT_DIR)
+        knowledge_base.write_package('knowledge', OUTPUT_DIR)
         '''
         TODO: is there any way of deriving the package name from the
         value of OUTPUT_DIR?

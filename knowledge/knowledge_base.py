@@ -92,11 +92,9 @@ class KnowledgeBase:
         merged.relations = merge_lists(self.relations, other.relations)
         return merged
 
-    def write_package(self, path):
-        # TODO: maybe the source path should be parametrised too
-        # the app knows about it somewhere (LearningStrategy?)
-        # and CDS could know about it and pass it in too
-        copy_tree('knowledge', path)
+    def write_package(self, source, target):
+        copy_tree(source, target)
         for concept in self.things + self.categories:
-            concept.overwrite_copy(path)
-        self.export_populator(path)
+            concept.overwrite_copy(target)
+        self.export_populator(target)
+
