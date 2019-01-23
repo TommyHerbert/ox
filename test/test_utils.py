@@ -44,6 +44,12 @@ class TestUtils(unittest.TestCase):
         path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
         self.assertTrue(is_package(path))
 
+    def test_create_empty_package(self):
+        pass
+        # TODO: test package exists
+        # TODO: test folder exists without initialiser
+        # TODO: test folder doesn't exist
+
     def test_create_empty_knowledge_package(self):
         path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
         create_empty_knowledge_package(path)

@@ -13,6 +13,10 @@ def create_unique_package(path):
     return unique_id
 
 
+# TODO: create_empty_package(path)
+# should do nothing if package exists
+
+
 def create_empty_knowledge_package(path):
     makedirs(join(path, 'knowledge'))
     Path(join(path, 'knowledge', '__init__.py')).touch()
