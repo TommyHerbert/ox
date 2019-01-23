@@ -1,4 +1,5 @@
-from os import path, makedirs
+from os import path, makedirs, listdir
+from importlib import import_module
 
 LOG_PATH = '/home/oxadmin/ox/logs'
 
@@ -11,28 +12,32 @@ logging.basicConfig(level=logging.INFO, filename=LOG_PATH + '/cds2.log')
 
 logging.info('started cds2')
 
-TEMP_PATH = '/tmp/ox/'
-
 # build old knowledge base
 from knowledge.knowledge_base import KnowledgeBase
 from knowledge.knowledge_base_populator import KnowledgeBasePopulator
-old_knowledge_base = KnowledgeBase()
-KnowledgeBasePopulator.populate(old_knowledge_base)
+current_version = KnowledgeBase()
+KnowledgeBasePopulator.populate(current_version)
 
-# build new knowledge base
-from new_knowledge.knowledge.knowledge_base \
-    import KnowledgeBase as NewKnowledgeBase
-from new_knowledge.knowledge.knowledge_base_populator \
-    import KnowledgeBasePopulator as NewKnowledgeBasePopulator
-new_knowledge_base = NewKnowledgeBase()
-NewKnowledgeBasePopulator.populate(new_knowledge_base)
+# build the new knowledge bases and merge them into the old one
+new_packages = [x for x in listdir('new_knowledge') if x != '__init__.py']
+for package_name in new_packages:
+    package_path = 'new_knowledge.{}.'.format(package_name)
+    new_knowledge_base_module = import_module(package_path + 'knowledge_base')
+    new_populator_path = package_path + 'knowledge_base_populator'
+    new_populator_module = import_module(new_populator_path)
+    new_knowledge_base = new_knowledge_base_module.KnowledgeBase()
+    new_populator_module.KnowledgeBasePopulator.populate(new_knowledge_base)
+    current_version = current_version.merge(new_knowledge_base)
 
-# merge the two knowledge bases
-merged_knowledge_base = knowledge_base.merge(new_knowledge_base)
+# TODO: create merged_knowledge package if necessary
 
-# write the merged knowledge base to temporary location
-if not path.exists(TEMP_PATH):
-    makedirs(TEMP_PATH)
-merged_knowledge_base.write_package(TEMP_PATH)
+current_version.write_package('knowledge', 'merged_knowledge')
+
+# TODO: clear out the new_knowledge package
+
+current_version.write_package('merged_knowledge', 'knowledge')
+
+# TODO: clear out the merged_knowledge package
 
 logging.info('completed cds2')
+
