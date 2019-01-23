@@ -4,7 +4,7 @@ from os import makedirs
 from pathlib import Path
 from utils.paths import to_package_path
 from utils.lists import sorted_copy, merge_lists
-from utils.knowledge import copy_knowledge_package
+from distutils.dir_util import copy_tree
 from knowledge.relation import get_relation_import_statement, Relation
 
 populator_template = '''{imports}
@@ -96,7 +96,7 @@ class KnowledgeBase:
         # TODO: maybe the source path should be parametrised too
         # the app knows about it somewhere (LearningStrategy?)
         # and CDS could know about it and pass it in too
-        copy_knowledge_package('.', path)
+        copy_tree('knowledge', path)
         for concept in self.things + self.categories:
-            concept.overwrite_copy(path + '/knowledge')
-        self.export_populator(path + '/knowledge')
+            concept.overwrite_copy(path)
+        self.export_populator(path)
