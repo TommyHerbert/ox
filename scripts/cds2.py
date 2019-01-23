@@ -1,35 +1,38 @@
+import logging
 from os import path, makedirs, listdir
 from importlib import import_module
+from pathlib import Path
 
 LOG_PATH = '/home/oxadmin/ox/logs'
+MERGED_PATH = '/home/oxadmin/ox/merged_knowledge'
 
 if not path.exists(LOG_PATH):
     makedirs(LOG_PATH)
-
-import logging
-
 logging.basicConfig(level=logging.INFO, filename=LOG_PATH + '/cds2.log')
-
 logging.info('started cds2')
 
+
+def build_knowledge_base(location):
+    prefix = location + '.'
+    knowledge_base = import_module(location + 'knowledge_base').KnowledgeBase()
+    populator_module = import_module(location + 'knowledge_base_populator')
+    populator_module.KnowledgeBasePopulator.populate(knowledge_base)
+    return knowledge_base
+
+
 # build old knowledge base
-from knowledge.knowledge_base import KnowledgeBase
-from knowledge.knowledge_base_populator import KnowledgeBasePopulator
-current_version = KnowledgeBase()
-KnowledgeBasePopulator.populate(current_version)
+current_version = build_knowledge_base('knowledge')
 
 # build the new knowledge bases and merge them into the old one
 new_packages = [x for x in listdir('new_knowledge') if x != '__init__.py']
 for package_name in new_packages:
-    package_path = 'new_knowledge.{}.'.format(package_name)
-    new_knowledge_base_module = import_module(package_path + 'knowledge_base')
-    new_populator_path = package_path + 'knowledge_base_populator'
-    new_populator_module = import_module(new_populator_path)
-    new_knowledge_base = new_knowledge_base_module.KnowledgeBase()
-    new_populator_module.KnowledgeBasePopulator.populate(new_knowledge_base)
-    current_version = current_version.merge(new_knowledge_base)
+    location = 'new_knowledge.' + package_name
+    current_version = current_version.merge(build_knowledge_base(location))
 
 # TODO: create merged_knowledge package if necessary
+if not path.exists(MERGED_PATH):
+    makedirs(MERGED_PATH)
+    Path(path.join(MERGED_PATH, '__init__.py')).touch()
 
 current_version.write_package('knowledge', 'merged_knowledge')
 
