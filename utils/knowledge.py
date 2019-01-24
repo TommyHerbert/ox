@@ -1,5 +1,5 @@
 from os import makedirs
-from os.path import join
+from os.path import join, isdir, exists
 from pathlib import Path
 from uuid import uuid4
 from shutil import copytree
@@ -13,8 +13,12 @@ def create_unique_package(path):
     return unique_id
 
 
-# TODO: create_empty_package(path)
-# should do nothing if package exists
+def create_empty_package(path):
+    if not isdir(path):
+        makedirs(path)
+    initialiser_path = join(path, '__init__.py')
+    if not exists(initialiser_path):
+        Path(initialiser_path).touch()
 
 
 def create_empty_knowledge_package(path):

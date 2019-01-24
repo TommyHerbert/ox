@@ -2,12 +2,14 @@ import unittest
 from utils.paths import to_package_path
 from utils.lists import sorted_copy
 from utils.knowledge import create_unique_package, \
+                            create_empty_package, \
                             create_empty_knowledge_package, \
                             copy_knowledge_package
 from utils.case import phrase_to_headline
 from os import makedirs
 from os.path import join, exists, isdir, isfile
 from shutil import rmtree
+from uuid import uuid4
 
 OUTPUT_DIR = 'utils_test_output'
 
@@ -45,10 +47,23 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(is_package(path))
 
     def test_create_empty_package(self):
-        pass
-        # TODO: test package exists
-        # TODO: test folder exists without initialiser
-        # TODO: test folder doesn't exist
+        makedirs(OUTPUT_DIR)
+        folder_name = 'p' + str(uuid4()).replace('-', '_')
+        path = join(OUTPUT_DIR, folder_name)
+        create_empty_package(path)
+        self.assertTrue(is_package(path))
+
+    def test_no_need_to_create_package(self):
+        path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
+        create_empty_package(path)
+        # if it doesn't throw, we're good
+        
+    def test_turn_folder_into_package(self):
+        folder_name = 'p' + str(uuid4()).replace('-', '_')
+        path = join(OUTPUT_DIR, folder_name)
+        makedirs(path)
+        create_empty_package(path)
+        self.assertTrue(is_package(path))
 
     def test_create_empty_knowledge_package(self):
         path = join(OUTPUT_DIR, create_unique_package(OUTPUT_DIR))
