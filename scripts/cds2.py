@@ -1,7 +1,8 @@
 import logging
-from os import path, makedirs, listdir
+from os import path, makedirs, listdir, remove
 from importlib import import_module
-from pathlib import Path
+from utils.knowledge import create_empty_package
+from shutil import rmtree
 
 LOG_PATH = '/home/oxadmin/ox/logs'
 MERGED_PATH = '/home/oxadmin/ox/merged_knowledge'
@@ -14,8 +15,8 @@ logging.info('started cds2')
 
 def build_knowledge_base(location):
     prefix = location + '.'
-    knowledge_base = import_module(location + 'knowledge_base').KnowledgeBase()
-    populator_module = import_module(location + 'knowledge_base_populator')
+    knowledge_base = import_module(prefix + 'knowledge_base').KnowledgeBase()
+    populator_module = import_module(prefix + 'knowledge_base_populator')
     populator_module.KnowledgeBasePopulator.populate(knowledge_base)
     return knowledge_base
 
@@ -29,18 +30,25 @@ for package_name in new_packages:
     location = 'new_knowledge.' + package_name
     current_version = current_version.merge(build_knowledge_base(location))
 
-# TODO: create merged_knowledge package if necessary
-if not path.exists(MERGED_PATH):
-    makedirs(MERGED_PATH)
-    Path(path.join(MERGED_PATH, '__init__.py')).touch()
+# create merged_knowledge package if necessary
+create_empty_package(MERGED_PATH)
 
+# write the merged knowledge base to a temporary location
 current_version.write_package('knowledge', 'merged_knowledge')
 
-# TODO: clear out the new_knowledge package
+# clear out the new_knowledge package
+for package in new_packages:
+    rmtree(join('new_knowledge', package))
 
+# write the new knowledge base to its final resting place
 current_version.write_package('merged_knowledge', 'knowledge')
 
-# TODO: clear out the merged_knowledge package
+# clear out the merged_knowledge package
+for name in [x for x in listdir('merged_knowledge') if x != '__init__.py']:
+    if path.isdir(name):
+        rmtree(name)
+    else:
+        remove(name)
 
 logging.info('completed cds2')
 
