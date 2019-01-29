@@ -25,7 +25,8 @@ def build_knowledge_base(location):
 current_version = build_knowledge_base('knowledge')
 
 # build the new knowledge bases and merge them into the old one
-new_packages = [x for x in listdir('new_knowledge') if x != '__init__.py']
+non_packages = ['__init__.py', '__pycache__']
+new_packages = [x for x in listdir('new_knowledge') if x not in non_packages]
 for package_name in new_packages:
     location = 'new_knowledge.' + package_name
     current_version = current_version.merge(build_knowledge_base(location))
