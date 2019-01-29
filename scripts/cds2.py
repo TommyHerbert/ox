@@ -38,7 +38,7 @@ current_version.write_package('knowledge', 'merged_knowledge')
 
 # clear out the new_knowledge package
 for package in new_packages:
-    rmtree(join('new_knowledge', package))
+    rmtree(path.join('new_knowledge', package))
 
 # write the new knowledge base to its final resting place
 current_version.write_package('merged_knowledge', 'knowledge')
