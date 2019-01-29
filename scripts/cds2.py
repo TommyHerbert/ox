@@ -45,10 +45,11 @@ current_version.write_package('merged_knowledge', 'knowledge')
 
 # clear out the merged_knowledge package
 for name in [x for x in listdir('merged_knowledge') if x != '__init__.py']:
-    if path.isdir(name):
-        rmtree(name)
+    filepath = path.join('merged_knowledge', name)
+    if path.isdir(filepath):
+        rmtree(filepath)
     else:
-        remove(name)
+        remove(filepath)
 
 logging.info('completed cds2')
 
