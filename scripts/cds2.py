@@ -20,16 +20,22 @@ logging.basicConfig(level=logging.INFO, filename=LOG_PATH)
 logging.info('started cds2')
 
 
+def build_module_path(package_name, module_name):
+    return '.'.join((package_name, module_name))
+
+
 def build_knowledge_base(location):
-    prefix = location + '.'
-    knowledge_base = import_module(prefix + 'knowledge_base').KnowledgeBase()
-    populator_module = import_module(prefix + 'knowledge_base_populator')
+    base_module_path = build_module_path(location, 'knowledge_base')
+    knowledge_base = import_module(base_module_path).KnowledgeBase()
+    populator_module_path = \
+        build_module_path(location, 'knowledge_base_populator')
+    populator_module = import_module(populator_module_path)
     populator_module.KnowledgeBasePopulator.populate(knowledge_base)
     return knowledge_base
 
 
 # build old knowledge base
-current_version = build_knowledge_base('knowledge')
+current_version = build_knowledge_base(KNOWLEDGE_PACKAGE_NAME)
 
 # build the new knowledge bases and merge them into the old one
 non_packages = ['__init__.py', '__pycache__']
