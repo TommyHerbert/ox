@@ -4,8 +4,11 @@ from importlib import import_module
 from utils.knowledge import create_empty_package
 from shutil import rmtree
 
-LOG_PATH = '/home/oxadmin/ox/logs'
-MERGED_PATH = '/home/oxadmin/ox/merged_knowledge'
+TOP_LEVEL = '/home/oxadmin/ox'
+LOG_PATH = path.join(TOP_LEVEL, 'logs')
+KNOWLEDGE_PATH = path.join(TOP_LEVEL, 'knowledge')
+NEW_KNOWLEDGE_PATH = path.join(TOP_LEVEL, 'new_knowledge')
+MERGED_PATH = path.join(TOP_LEVEL, 'merged_knowledge')
 
 if not path.exists(LOG_PATH):
     makedirs(LOG_PATH)
@@ -26,7 +29,8 @@ current_version = build_knowledge_base('knowledge')
 
 # build the new knowledge bases and merge them into the old one
 non_packages = ['__init__.py', '__pycache__']
-new_packages = [x for x in listdir('new_knowledge') if x not in non_packages]
+contents = listdir(NEW_KNOWLEDGE_PATH)
+new_packages = [x for x in contents if x not in non_packages]
 for package_name in new_packages:
     location = 'new_knowledge.' + package_name
     current_version = current_version.merge(build_knowledge_base(location))
@@ -35,18 +39,18 @@ for package_name in new_packages:
 create_empty_package(MERGED_PATH)
 
 # write the merged knowledge base to a temporary location
-current_version.write_package('knowledge', 'merged_knowledge')
+current_version.write_package(KNOWLEDGE_PATH, MERGED_PATH)
 
 # clear out the new_knowledge package
 for package in new_packages:
-    rmtree(path.join('new_knowledge', package))
+    rmtree(path.join(NEW_KNOWLEDGE_PATH, package))
 
 # write the new knowledge base to its final resting place
-current_version.write_package('merged_knowledge', 'knowledge')
+current_version.write_package(MERGED_PATH, KNOWLEDGE_PATH)
 
 # clear out the merged_knowledge package
-for name in [x for x in listdir('merged_knowledge') if x != '__init__.py']:
-    filepath = path.join('merged_knowledge', name)
+for name in [x for x in listdir(MERGED_PATH) if x != '__init__.py']:
+    filepath = path.join(MERGED_PATH, name)
     if path.isdir(filepath):
         rmtree(filepath)
     else:
