@@ -4,15 +4,19 @@ from importlib import import_module
 from utils.knowledge import create_empty_package
 from shutil import rmtree
 
+KNOWLEDGE_PACKAGE_NAME = 'knowledge'
+NEW_KNOWLEDGE_PACKAGE_NAME = 'new_knowledge'
+MERGED_PACKAGE_NAME = 'merged_knowledge'
+
 TOP_LEVEL = '/home/oxadmin/ox'
-LOG_PATH = path.join(TOP_LEVEL, 'logs')
-KNOWLEDGE_PATH = path.join(TOP_LEVEL, 'knowledge')
-NEW_KNOWLEDGE_PATH = path.join(TOP_LEVEL, 'new_knowledge')
-MERGED_PATH = path.join(TOP_LEVEL, 'merged_knowledge')
+LOG_PATH = path.join(TOP_LEVEL, 'logs', 'cds2.log')
+KNOWLEDGE_PATH = path.join(TOP_LEVEL, KNOWLEDGE_PACKAGE_NAME)
+NEW_KNOWLEDGE_PATH = path.join(TOP_LEVEL, NEW_KNOWLEDGE_PACKAGE_NAME)
+MERGED_PATH = path.join(TOP_LEVEL, MERGED_PACKAGE_NAME)
 
 if not path.exists(LOG_PATH):
     makedirs(LOG_PATH)
-logging.basicConfig(level=logging.INFO, filename=LOG_PATH + '/cds2.log')
+logging.basicConfig(level=logging.INFO, filename=LOG_PATH)
 logging.info('started cds2')
 
 
