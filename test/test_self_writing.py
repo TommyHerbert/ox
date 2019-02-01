@@ -1,6 +1,8 @@
 from importlib import import_module
 import unittest
-from utils.knowledge import create_unique_package, copy_knowledge_package
+from utils.knowledge import create_unique_package, \
+                            copy_knowledge_package, \
+                            create_empty_package
 from utils.paths import to_package_path
 from knowledge.myself import Myself
 from knowledge.song import Song
@@ -19,8 +21,7 @@ SOURCE_PATH_KEY = 'OX_SOURCE_PATH'
 
 class TestSelfWriting(unittest.TestCase):
     def setUp(self):
-        mkdir('test_output')
-        Path('test_output/__init__.py').touch()
+        create_empty_package('test_output')
 
     def tearDown(self):
         rmtree('test_output')
@@ -71,9 +72,22 @@ class TestSelfWriting(unittest.TestCase):
 
     def test_overwrite_copy(self):
         create_dummy_thing_class('test_output')
-        Adele().overwrite_copy('test_output')
+        Adele().overwrite_copy('', 'test_output')
         from test_output.adele import Adele as Adele2
         self.assertEqual('Adele', Adele2().lexical_form)
+
+    def test_overwrite_in_arbitrary_location(self):
+        plain_folder = join('test_output', 'plain')
+        mkdir(plain_folder)
+        outer_package = join(plain_folder, 'outer')
+        create_empty_package(outer_package)
+        inner_package = join(outer_package, 'inner')
+        create_empty_package(inner_package)
+        Adele().overwrite_copy('plain_folder', join('outer', 'inner'))
+        expected_file = join(inner_package, 'adele.py')
+        expected_content = 'from outer.inner.concept import Thing\n'
+        with open(expected_file) as f:
+            self.assertEqual(expected_content, f.readline())
 
     def test_export_populator(self):
         knowledge_base1 = KnowledgeBase()

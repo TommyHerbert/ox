@@ -36,10 +36,10 @@ else:
     path_prefix = 'https://api.digitalocean.com/v2/load_balancers/'
     path = path_prefix + balancer_id
     headers = {'Authorization': 'Bearer ' + token}
-    while count_droplets(path, headers) <= MINIMUM_HOSTS:
-        sleep(5)
+    #while count_droplets(path, headers) <= MINIMUM_HOSTS:
+    #    sleep(5)
     json = {'droplet_ids': [droplet_id]}
-    delete(path + '/droplets', headers=headers, json=json)
-    logging.info('requested Digital Ocean to remove droplet from balancer')
+    #delete(path + '/droplets', headers=headers, json=json)
+    #logging.info('requested Digital Ocean to remove droplet from balancer')
 logging.debug('cds1.py completed')
 
