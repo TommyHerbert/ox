@@ -8,7 +8,8 @@ KNOWLEDGE_NAME = 'knowledge'
 NEW_KNOWLEDGE_NAME = 'new_knowledge'
 
 TOP_LEVEL = '/home/oxadmin/ox'
-LOG_PATH = path.join(TOP_LEVEL, 'logs', 'cds2.log')
+LOG_DIRECTORY = path.join(TOP_LEVEL, 'logs')
+LOG_FILE = path.join(TOP_LEVEL, 'logs', 'cds2.log')
 KNOWLEDGE_PATH = path.join(TOP_LEVEL, KNOWLEDGE_NAME)
 NEW_KNOWLEDGE_PATH = path.join(TOP_LEVEL, NEW_KNOWLEDGE_NAME)
 MERGED_PATH = path.join(TOP_LEVEL, 'merged_knowledge')
@@ -38,9 +39,9 @@ def build_knowledge_base(location):
 
 
 # configure log
-if not path.exists(LOG_PATH):
-    makedirs(LOG_PATH)
-logging.basicConfig(level=logging.INFO, filename=LOG_PATH)
+if not path.exists(LOG_DIRECTORY):
+    makedirs(LOG_DIRECTORY)
+logging.basicConfig(level=logging.INFO, filename=LOG_FILE)
 
 # report that the script has started
 logging.info('started cds2')
