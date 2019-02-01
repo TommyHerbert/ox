@@ -19,6 +19,6 @@ class Question(Category):
     def get_question_logic(self, input_string, knowledge_base, reader):
         return None
 
-    def overwrite_copy(self, path):
+    def overwrite_copy(self, source_directory, relative_path):
         pass # don't generate this concept from the default template
 

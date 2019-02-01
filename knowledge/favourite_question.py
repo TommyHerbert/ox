@@ -42,6 +42,3 @@ class FavouriteQuestion(Question):
             return None
         return max(ox_likes, key=lambda r: r.arguments[2]).arguments[1]
 
-    def overwrite_copy(self, path):
-        pass # don't generate this concept from the default template
-

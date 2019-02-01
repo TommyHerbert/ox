@@ -47,7 +47,7 @@ class KnowledgeBase:
         with open(populator_path, 'w') as populator_file:
             populator_file.write(populator_source)
         for concept in concepts:
-            concept.overwrite_copy(path)
+            concept.overwrite_copy('', path) # TODO: export_populator should take an extra argument and pass it through here
 
     def get_imports(self, path):
         concepts = self.categories + self.things
@@ -95,6 +95,6 @@ class KnowledgeBase:
     def write_package(self, source, target):
         copy_tree(source, target)
         for concept in self.things + self.categories:
-            concept.overwrite_copy(target)
+            concept.overwrite_copy('', target) # TODO
         self.export_populator(target)
 

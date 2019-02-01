@@ -26,7 +26,7 @@ class CompoundNoun(Category):
         related = lambda i: self.is_related(i, qualifier_string, relations)
         return [i for i in instances if related(i)]
 
-    def overwrite_copy(self, path):
+    def overwrite_copy(self, source_directory, relative_path):
         pass # don't generate this concept from the default template
 
     @staticmethod
