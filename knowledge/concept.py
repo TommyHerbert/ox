@@ -63,9 +63,9 @@ class Concept:
     def get_concept_type(self):
         return 'UndefinedConceptType'
 
-    def overwrite_copy(self, source_directory, relative_path):
-        file_path = join(relative_path, self.get_module_name()) + '.py'
-        package_path = to_package_path(relative_path)
+    def overwrite_copy(self, path):
+        file_path = join(path, self.get_module_name()) + '.py'
+        package_path = to_package_path(path)
         concept_type = self.get_concept_type()
         class_name = self.get_class_name()
         lexical_form = self.get_lexical_form()
