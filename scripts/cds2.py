@@ -4,51 +4,73 @@ from importlib import import_module
 from utils.knowledge import create_empty_package
 from shutil import rmtree
 
-LOG_PATH = '/home/oxadmin/ox/logs'
-MERGED_PATH = '/home/oxadmin/ox/merged_knowledge'
+KNOWLEDGE_NAME = 'knowledge'
+NEW_KNOWLEDGE_NAME = 'new_knowledge'
 
-if not path.exists(LOG_PATH):
-    makedirs(LOG_PATH)
-logging.basicConfig(level=logging.INFO, filename=LOG_PATH + '/cds2.log')
-logging.info('started cds2')
+TOP_LEVEL = '/home/oxadmin/ox'
+LOG_DIRECTORY = path.join(TOP_LEVEL, 'logs')
+LOG_FILE = path.join(TOP_LEVEL, 'logs', 'cds2.log')
+KNOWLEDGE_PATH = path.join(TOP_LEVEL, KNOWLEDGE_NAME)
+NEW_KNOWLEDGE_PATH = path.join(TOP_LEVEL, NEW_KNOWLEDGE_NAME)
+MERGED_PATH = path.join(TOP_LEVEL, 'merged_knowledge')
+
+
+def build_package_path(head, tail):
+    return '.'.join((head, tail))
+
+
+def clear_package(dir_path):
+    for name in [x for x in listdir(dir_path) if x != '__init__.py']:
+        file_path = path.join(dir_path, name)
+        if path.isdir(file_path):
+            rmtree(file_path)
+        else:
+            remove(file_path)
 
 
 def build_knowledge_base(location):
-    prefix = location + '.'
-    knowledge_base = import_module(prefix + 'knowledge_base').KnowledgeBase()
-    populator_module = import_module(prefix + 'knowledge_base_populator')
+    base_module_path = build_package_path(location, 'knowledge_base')
+    knowledge_base = import_module(base_module_path).KnowledgeBase()
+    populator_module_path = \
+        build_package_path(location, 'knowledge_base_populator')
+    populator_module = import_module(populator_module_path)
     populator_module.KnowledgeBasePopulator.populate(knowledge_base)
     return knowledge_base
 
 
+# configure log
+if not path.exists(LOG_DIRECTORY):
+    makedirs(LOG_DIRECTORY)
+logging.basicConfig(level=logging.INFO, filename=LOG_FILE)
+
+# report that the script has started
+logging.info('started cds2')
+
 # build old knowledge base
-current_version = build_knowledge_base('knowledge')
+current_version = build_knowledge_base(KNOWLEDGE_NAME)
 
 # build the new knowledge bases and merge them into the old one
-new_packages = [x for x in listdir('new_knowledge') if x != '__init__.py']
-for package_name in new_packages:
-    location = 'new_knowledge.' + package_name
+non_packages = ['__init__.py', '__pycache__']
+contents = listdir(NEW_KNOWLEDGE_PATH)
+for package_name in [x for x in contents if x not in non_packages]:
+    location = build_package_path(NEW_KNOWLEDGE_NAME, package_name)
     current_version = current_version.merge(build_knowledge_base(location))
 
 # create merged_knowledge package if necessary
 create_empty_package(MERGED_PATH)
 
 # write the merged knowledge base to a temporary location
-current_version.write_package('knowledge', 'merged_knowledge')
+current_version.write_package(KNOWLEDGE_PATH, MERGED_PATH)
 
 # clear out the new_knowledge package
-for package in new_packages:
-    rmtree(join('new_knowledge', package))
+clear_package(NEW_KNOWLEDGE_PATH)
 
 # write the new knowledge base to its final resting place
-current_version.write_package('merged_knowledge', 'knowledge')
+current_version.write_package(MERGED_PATH, KNOWLEDGE_PATH)
 
 # clear out the merged_knowledge package
-for name in [x for x in listdir('merged_knowledge') if x != '__init__.py']:
-    if path.isdir(name):
-        rmtree(name)
-    else:
-        remove(name)
+clear_package(MERGED_PATH)
 
+# report that the script is finished
 logging.info('completed cds2')
 
