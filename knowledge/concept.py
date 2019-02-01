@@ -3,7 +3,7 @@ from utils.paths import to_package_path
 from knowledge.logical_tree import LogicalTreeLeaf
 from os.path import normpath, sep, join
 
-template = """from {package_path}.concept import {concept_type}
+SOURCE_TEMPLATE = """from {package_path}.concept import {concept_type}
 
 
 class {class_name}({concept_type}):
@@ -64,13 +64,14 @@ class Concept:
         return 'UndefinedConceptType'
 
     def overwrite_copy(self, source_directory, relative_path):
-        file_path = join(relative_path, self.get_module_name()) + '.py'
+        module = self.get_module_name()
+        file_path = join(source_directory, relative_path, module) + '.py'
         package_path = to_package_path(relative_path)
         concept_type = self.get_concept_type()
         class_name = self.get_class_name()
         lexical_form = self.get_lexical_form()
         with open(file_path, 'w') as f:
-            f.write(template.format(**vars()))
+            f.write(SOURCE_TEMPLATE.format(**vars()))
 
 
 class Category(Concept):

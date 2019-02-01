@@ -83,7 +83,7 @@ class TestSelfWriting(unittest.TestCase):
         create_empty_package(outer_package)
         inner_package = join(outer_package, 'inner')
         create_empty_package(inner_package)
-        Adele().overwrite_copy('plain_folder', join('outer', 'inner'))
+        Adele().overwrite_copy(plain_folder, join('outer', 'inner'))
         expected_file = join(inner_package, 'adele.py')
         expected_content = 'from outer.inner.concept import Thing\n'
         with open(expected_file) as f:
