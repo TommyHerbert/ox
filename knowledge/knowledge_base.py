@@ -32,10 +32,9 @@ class KnowledgeBase:
     def is_empty(self):
         return self.categories + self.things + self.relations == []
     
-    def export_populator(self, path):
-        populator_path = join(path, 'knowledge_base_populator.py')
+    def export_populator(self, source_directory, relative_path):
         separator = '\n' + 8 * ' '
-        imports = self.get_imports(path)
+        imports = self.get_imports(relative_path)
         concepts = self.categories + self.things
         instantiation = self.get_instantiation_statements(concepts, separator)
         populate_categories = \
@@ -44,10 +43,12 @@ class KnowledgeBase:
             self.get_population_statements(self.things, separator)
         populate_relations = self.get_addition_logic(self.relations, separator)
         populator_source = populator_template.format(**vars())
+        filename = 'knowledge_base_populator.py'
+        populator_path = join(source_directory, relative_path, filename)
         with open(populator_path, 'w') as populator_file:
             populator_file.write(populator_source)
         for concept in concepts:
-            concept.overwrite_copy('', path) # TODO: export_populator should take an extra argument and pass it through here
+            concept.overwrite_copy(source_directory, relative_path)
 
     def get_imports(self, path):
         concepts = self.categories + self.things
@@ -96,5 +97,5 @@ class KnowledgeBase:
         copy_tree(source, target)
         for concept in self.things + self.categories:
             concept.overwrite_copy('', target) # TODO
-        self.export_populator(target)
+        self.export_populator('', target) # TODO
 

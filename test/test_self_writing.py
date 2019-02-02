@@ -99,6 +99,20 @@ class TestSelfWriting(unittest.TestCase):
         knowledge_base3 = generate_copy(knowledge_base2, 'test_output')
         self.assertTrue(knowledge_base1.matches(knowledge_base3))
 
+    def test_export_in_arbitrary_location(self):
+        plain_folder = join('test_output', 'plain')
+        mkdir(plain_folder)
+        outer_package = join(plain_folder, 'outer')
+        create_empty_package(outer_package)
+        inner_package = join(outer_package, 'inner')
+        create_empty_package(inner_package)
+        knowledge_base = KnowledgeBase()
+        knowledge_base.export_populator(plain_folder, join('outer', 'inner'))
+        expected_file = join(inner_package, 'knowledge_base_populator.py')
+        expected_content = 'from outer.inner.relation import Relation\n'
+        with open(expected_file) as f:
+            self.assertEqual(expected_content, f.readline())
+
 
 def create_dummy_thing_class(path):
     with open(join(path, 'concept.py'), 'w') as f:
@@ -110,7 +124,7 @@ def generate_copy(knowledge_base, path):
     source_path = environ[SOURCE_PATH_KEY]
     copy_knowledge_package(source_path, join(path, unique_id))
     knowledge_directory_path = join(path, unique_id, 'knowledge')
-    knowledge_base.export_populator(knowledge_directory_path)
+    knowledge_base.export_populator('', knowledge_directory_path)
     populator_module_path = to_package_path(knowledge_directory_path) + \
                             '.knowledge_base_populator'
     populator_module = import_module(populator_module_path)
