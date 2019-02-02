@@ -8,7 +8,8 @@ from knowledge.hello import Hello
 from knowledge.singer import Singer
 from knowledge.concept import Thing
 from knowledge.song import Song
-from os import makedirs
+from utils.knowledge import create_empty_package
+from os import makedirs, getcwd, chdir
 from os.path import exists, join
 from shutil import rmtree
 from pathlib import Path
@@ -19,10 +20,12 @@ OUTPUT_DIR = 'utils_test_output'
 
 class TestKnowledgeBase(unittest.TestCase):
     def setUp(self):
+        self.preferred_directory = getcwd()
         self.clear_output()
 
     def tearDown(self):
         self.clear_output()
+        chdir(self.preferred_directory)
 
     def clear_output(self):
         if exists(OUTPUT_DIR):
@@ -98,10 +101,23 @@ class TestKnowledgeBase(unittest.TestCase):
         
         makedirs(OUTPUT_DIR)
         Path(join(OUTPUT_DIR, '__init__.py')).touch()
-        knowledge_base.write_package('knowledge', OUTPUT_DIR)
+        knowledge_base.write_package('', 'knowledge', OUTPUT_DIR)
         knowledge_base2 = import_module(OUTPUT_DIR + '.knowledge_base')
         populator2 = import_module(OUTPUT_DIR + '.knowledge_base_populator')
         copied_base = knowledge_base2.KnowledgeBase()
         populator2.KnowledgeBasePopulator.populate(copied_base)
         self.assertTrue(knowledge_base.matches(copied_base))
+
+    def test_write_package_to_arbitrary_location(self):
+        top_level_directory = getcwd()
+        create_empty_package(OUTPUT_DIR)
+        chdir('..')
+        base = KnowledgeBase()
+        base.write_package(top_level_directory, 'knowledge', OUTPUT_DIR)
+        chdir(top_level_directory)
+        expected_file = join(OUTPUT_DIR, 'knowledge_base_populator.py')
+        expected_content_template = 'from {}.relation import Relation\n'
+        expected_content = expected_content_template.format(OUTPUT_DIR)
+        with open(expected_file) as f:
+            self.assertEqual(expected_content, f.readline())
 
