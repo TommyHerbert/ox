@@ -12,6 +12,7 @@ from os import makedirs
 from os.path import exists, join
 from shutil import rmtree
 from pathlib import Path
+from importlib import import_module
 
 OUTPUT_DIR = 'utils_test_output'
 
@@ -98,12 +99,8 @@ class TestKnowledgeBase(unittest.TestCase):
         makedirs(OUTPUT_DIR)
         Path(join(OUTPUT_DIR, '__init__.py')).touch()
         knowledge_base.write_package('knowledge', OUTPUT_DIR)
-        '''
-        TODO: is there any way of deriving the package name from the
-        value of OUTPUT_DIR?
-        '''
-        import utils_test_output.knowledge_base as knowledge_base2
-        import utils_test_output.knowledge_base_populator as populator2
+        knowledge_base2 = import_module(OUTPUT_DIR + '.knowledge_base')
+        populator2 = import_module(OUTPUT_DIR + '.knowledge_base_populator')
         copied_base = knowledge_base2.KnowledgeBase()
         populator2.KnowledgeBasePopulator.populate(copied_base)
         self.assertTrue(knowledge_base.matches(copied_base))
