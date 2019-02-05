@@ -1,11 +1,12 @@
 from utils.case import headline_to_snake
-from os.path import join
-from os import makedirs
+from os.path import join, isdir, exists
+from os import mkdir, makedirs, listdir
 from pathlib import Path
 from utils.paths import to_package_path
 from utils.lists import sorted_copy, merge_lists
 from distutils.dir_util import copy_tree
 from knowledge.relation import get_relation_import_statement, Relation
+from shutil import copyfile
 
 populator_template = '''{imports}
 
@@ -93,9 +94,19 @@ class KnowledgeBase:
         merged.relations = merge_lists(self.relations, other.relations)
         return merged
 
-    def write_package(self, source, target):
-        copy_tree(source, target)
+    def write_package(self, \
+                      top_level_directory, \
+                      relative_source_path, \
+                      relative_target_path):
+        source_path = join(top_level_directory, relative_source_path)
+        target_path = join(top_level_directory, relative_target_path)
+        if not exists(target_path):
+            mkdir(target_path)
+        for name in [x for x in listdir(source_path) if x != '__pycache__']:
+            source_file_path = join(source_path, name)
+            copy = copy_tree if isdir(source_file_path) else copyfile
+            copy(source_file_path, join(target_path, name))
         for concept in self.things + self.categories:
-            concept.overwrite_copy('', target) # TODO
-        self.export_populator('', target) # TODO
+            concept.overwrite_copy(top_level_directory, relative_target_path)
+        self.export_populator(top_level_directory, relative_target_path)
 
