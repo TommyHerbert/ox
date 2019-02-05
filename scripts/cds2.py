@@ -6,13 +6,14 @@ from shutil import rmtree
 
 KNOWLEDGE_NAME = 'knowledge'
 NEW_KNOWLEDGE_NAME = 'new_knowledge'
+MERGED_NAME = 'merged_knowledge'
 
 TOP_LEVEL = '/home/oxadmin/ox'
 LOG_DIRECTORY = path.join(TOP_LEVEL, 'logs')
 LOG_FILE = path.join(TOP_LEVEL, 'logs', 'cds2.log')
 KNOWLEDGE_PATH = path.join(TOP_LEVEL, KNOWLEDGE_NAME)
 NEW_KNOWLEDGE_PATH = path.join(TOP_LEVEL, NEW_KNOWLEDGE_NAME)
-MERGED_PATH = path.join(TOP_LEVEL, 'merged_knowledge')
+MERGED_PATH = path.join(TOP_LEVEL, MERGED_NAME)
 
 
 def build_package_path(head, tail):
@@ -60,13 +61,13 @@ for package_name in [x for x in contents if x not in non_packages]:
 create_empty_package(MERGED_PATH)
 
 # write the merged knowledge base to a temporary location
-current_version.write_package(KNOWLEDGE_PATH, MERGED_PATH)
+current_version.write_package(TOP_LEVEL, KNOWLEDGE_NAME, MERGED_NAME)
 
 # clear out the new_knowledge package
 clear_package(NEW_KNOWLEDGE_PATH)
 
 # write the new knowledge base to its final resting place
-current_version.write_package(MERGED_PATH, KNOWLEDGE_PATH)
+current_version.write_package(TOP_LEVEL, MERGED_NAME, KNOWLEDGE_NAME)
 
 # clear out the merged_knowledge package
 clear_package(MERGED_PATH)
