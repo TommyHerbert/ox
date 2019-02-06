@@ -9,3 +9,6 @@ python /home/oxadmin/ox/scripts/cds2.py &>> /home/oxadmin/ox/logs/cds2.log
 echo `date` 'called cds2.py' >> /home/oxadmin/ox/cds.log
 supervisorctl start ox &>> /home/oxadmin/ox/cds.log
 echo `date` 'started the app server' >> /home/oxadmin/ox/cds.log
+python /home/oxadmin/ox/scripts/cds3.py $DIGITAL_OCEAN_TOKEN $LOAD_BALANCER_ID $DROPLET_ID &>> /home/oxadmin/ox/logs/cds3.log
+echo `date` 'called cds3.py' >> /home/oxadmin/ox/cds.log
+
