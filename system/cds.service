@@ -3,9 +3,9 @@ Description=Continuous Development Service for Ox
 Documentation=https://ox.miraheze.org/wiki/ContinuousDevelopmentService
 
 [Service]
-Environment=DIGITAL_OCEAN_TOKEN=e7c44df7bc96d296c7cfe29859ec85180a503608f1e1b40c7ffc842c22f428a0
-Environment=LOAD_BALANCER_ID=2404677d-5dd3-40d5-85fe-7f84eb1c1a72
-Environment=DROPLET_ID=121594561
+Environment=DIGITAL_OCEAN_TOKEN=<authorisation_token>
+Environment=LOAD_BALANCER_ID=<balancer_id>
+Environment=DROPLET_ID=<droplet_id>
 Environment=PYTHONPATH=/home/oxadmin/ox/
 Type=oneshot
 ExecStart=/home/oxadmin/ox/scripts/cds.sh
