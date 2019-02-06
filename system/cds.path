@@ -1,0 +1,9 @@
+[Unit]
+Description=Triggers Ox's Continuous Development Service.
+Documentation=https://ox.miraheze.org/wiki/ContinuousDevelopmentService
+
+[Path]
+PathChanged=/home/oxadmin/ox/new_knowledge/
+
+[Install]
+WantedBy=multi-user.target
