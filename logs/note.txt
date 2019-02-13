@@ -1,0 +1,1 @@
+This file ensures that the logs directory exists in source control. Bit of a hack: probably the continuous development service should just be a bit smarter about making the logs directory when needed.
