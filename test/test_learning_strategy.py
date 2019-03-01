@@ -1,6 +1,6 @@
 from unittest import TestCase
 from knowledge.knowledge_base import KnowledgeBase
-from knowledge.naive_learning_strategy import select
+from conversation.naive_learning_strategy import select
 from knowledge.adele import Adele
 from knowledge.singer import Singer
 from knowledge.relation import Relation
