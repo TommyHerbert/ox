@@ -13,6 +13,10 @@ OUTPUT_PATH = 'learner_test_output'
 NEW_KNOWLEDGE = 'new_knowledge'
 
 
+def find_new_package(directory):
+    return [x for x in listdir(directory) if x != '__init__.py'][0]
+
+
 class TestLearner(TestCase):
     def setUp(self):
         create_empty_package(OUTPUT_PATH)
@@ -51,7 +55,4 @@ class TestLearner(TestCase):
 
         # check that the new knowledge base matches the longer-term one
         self.assertTrue(longer_term_base.matches(new_base))
-
-    def find_new_package(directory):
-        return [x for x in listdir(directory) if x != '__init__.py'][0]
 
