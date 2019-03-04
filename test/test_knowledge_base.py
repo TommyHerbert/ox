@@ -102,6 +102,7 @@ class TestKnowledgeBase(unittest.TestCase):
         makedirs(OUTPUT_DIR)
         Path(join(OUTPUT_DIR, '__init__.py')).touch()
         knowledge_base.write_package('', 'knowledge', OUTPUT_DIR)
+
         knowledge_base2 = import_module(OUTPUT_DIR + '.knowledge_base')
         populator2 = import_module(OUTPUT_DIR + '.knowledge_base_populator')
         copied_base = knowledge_base2.KnowledgeBase()
