@@ -3,16 +3,19 @@ from utils.knowledge import create_empty_package
 from knowledge.knowledge_base import KnowledgeBase
 from knowledge.adele import Adele
 from knowledge.singer import Singer
-from learner import update
+from conversation.learner import update
 from shutil import rmtree
 from os.path import join
+from importlib import import_module
 
 OUTPUT_PATH = 'learner_test_output'
+NEW_KNOWLEDGE = 'new_knowledge'
 
 
 class TestLearner(TestCase):
     def setUp(self):
-        create_empty_package(join(OUTPUT_PATH, 'new_knowledge'))
+        create_empty_package(OUTPUT_PATH)
+        create_empty_package(join(OUTPUT_PATH, NEW_KNOWLEDGE))
 
     def tearDown(self):
         rmtree(OUTPUT_PATH)
@@ -26,10 +29,15 @@ class TestLearner(TestCase):
         temporary_base.categories.append(singer)
         temporary_base.add_relation('is_a', (adele, singer))
         update(longer_term_base, temporary_base, OUTPUT_PATH)
-        '''
-        TODO:
-        confirm bases now match
-        create and populate knowledge base from new knowledge package
-        confirm that one matches the other two as well
-        '''
+
+        self.assertTrue(longer_term_base.matches(temporary_base))
+
+        new_package = find_new_package(join(OUTPUT_PATH, NEW_KNOWLEDGE))
+        package_tuple = (OUTPUT_PATH, NEW_KNOWLEDGE, new_package, knowledge)
+        package_path = '.'.join(package_tuple)
+        knowledge_base2 = import_module(package_path + '.knowledge_base')
+        populator2 = import_module(package_path + '.knowledge_base_populator')
+        new_base = knowledge_base2.KnowledgeBase()
+        populator2.KnowledgeBasePopulator.populate(new_base)
+        self.assertTrue(longer_term_base.matches(new_base))
 
