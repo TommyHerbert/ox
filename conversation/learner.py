@@ -17,7 +17,7 @@ def get_new_elements(new_base, old_base):
     '''
     Return a tuple of knowledge elements that are in the new knowledge
     base but not in the old one. The members of the tuple are
-    themselves tuples: the first contains things, the second categories
+    themselves tuples: the first contains categories, the second things
     and the third relations.
     '''
     
