@@ -60,6 +60,33 @@ class TestKnowledgeBase(unittest.TestCase):
         relation = Relation(name, args)
         self.assertIn(relation, knowledge_base.relations)
 
+    def test_add_categories(self):
+        knowledge_base = KnowledgeBase()
+        singer = Singer()
+        song = Song()
+        knowledge_base.add_categories([singer, song])
+        self.assertIn(singer, knowledge_base.categories)
+        self.assertIn(song, knowledge_base.categories)
+
+    def test_add_things(self):
+        knowledge_base = KnowledgeBase()
+        adele = Adele()
+        myself = Myself()
+        knowledge_base.add_things([adele, myself])
+        self.assertIn(adele, knowledge_base.things)
+        self.assertIn(myself, knowledge_base.things)
+
+    def test_add_relations(self):
+        knowledge_base = KnowledgeBase()
+        adele = Adele()
+        singer = Singer()
+        myself = Myself()
+        is_a = Relation('is_a', (adele, singer))
+        likes = Relation('likes', (myself, adele))
+        knowledge_base.add_relations([is_a, likes])
+        self.assertIn(is_a, knowledge_base.relations)
+        self.assertIn(likes, knowledge_base.relations)
+
     def test_merge(self):
         adele = Adele()
         hello = Hello()
