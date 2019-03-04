@@ -12,6 +12,6 @@ class TestLearningStrategy(TestCase):
         adele = Adele()
         singer = Singer()
         relation = Relation('is_a', (adele, singer))
-        new_elements = ((adele), (singer), (relation))
+        new_elements = ((adele,), (singer,), (relation,))
         self.assertEqual(new_elements, select(new_elements, knowledge_base))
 
