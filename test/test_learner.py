@@ -10,6 +10,7 @@ from os.path import join
 from importlib import import_module
 
 OUTPUT_PATH = 'learner_test_output'
+KNOWLEDGE = 'knowledge'
 NEW_KNOWLEDGE = 'new_knowledge'
 
 
@@ -20,6 +21,7 @@ def find_new_package(directory):
 class TestLearner(TestCase):
     def setUp(self):
         create_empty_package(OUTPUT_PATH)
+        create_empty_package(join(OUTPUT_PATH, KNOWLEDGE))
         create_empty_package(join(OUTPUT_PATH, NEW_KNOWLEDGE))
 
     def tearDown(self):
@@ -28,6 +30,8 @@ class TestLearner(TestCase):
     def test_update(self):
         # create two knowledge bases and update one from the other
         longer_term_base = KnowledgeBase()
+        longer_term_base.write_package('', KNOWLEDGE, join(OUTPUT_PATH, KNOWLEDGE))
+
         temporary_base = KnowledgeBase()
         adele = Adele()
         singer = Singer()
