@@ -1,4 +1,4 @@
-import naive_learning_strategy as strategy
+from conversation import naive_learning_strategy as strategy
 
 
 def update(longer_term_base, temporary_base, output_path):
