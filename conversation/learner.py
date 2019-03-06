@@ -7,12 +7,19 @@ KNOWLEDGE_PACKAGE_NAME = 'knowledge'
 NEW_KNOWLEDGE_PACKAGE_NAME = 'new_knowledge'
 
 
-def update(longer_term_base, temporary_base, output_path):
+def update(longer_term_base,
+           temporary_base,
+           output_path,
+           target=NEW_KNOWLEDGE_PACKAGE_NAME):
     '''
     When a conversation introduces a novel concept or relation, ask the
     learning strategy whether this information is worth preserving. If
     so, update the longer-term knowledge base and write it out as
     source code that can be imported by other instances of Ox.
+
+    The target parameter makes it easier to unit-test this method - the
+    default value is fine when the method is called from the main
+    source.
     '''
     new_elements = get_new_elements(temporary_base, longer_term_base)
     to_learn = strategy.select(new_elements, longer_term_base)
@@ -21,9 +28,9 @@ def update(longer_term_base, temporary_base, output_path):
     longer_term_base.add_relations(to_learn[2])
 
     if has_content(to_learn):
-        new_knowledge_path = join(output_path, NEW_KNOWLEDGE_PACKAGE_NAME)
+        new_knowledge_path = join(output_path, target)
         package_id = create_unique_package(new_knowledge_path)
-        relative_target_path = join(NEW_KNOWLEDGE_PACKAGE_NAME, package_id)
+        relative_target_path = join(target, package_id)
         longer_term_base.write_package(output_path,
                                        KNOWLEDGE_PACKAGE_NAME,
                                        relative_target_path)

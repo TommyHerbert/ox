@@ -30,7 +30,8 @@ class TestLearner(TestCase):
     def test_update(self):
         # create two knowledge bases and update one from the other
         longer_term_base = KnowledgeBase()
-        longer_term_base.write_package('', KNOWLEDGE, join(OUTPUT_PATH, KNOWLEDGE))
+        knowledge_path = join(OUTPUT_PATH, KNOWLEDGE)
+        longer_term_base.write_package('', KNOWLEDGE, knowledge_path)
 
         temporary_base = KnowledgeBase()
         adele = Adele()
@@ -38,7 +39,8 @@ class TestLearner(TestCase):
         temporary_base.add_thing(adele)
         temporary_base.categories.append(singer)
         temporary_base.add_relation('is_a', (adele, singer))
-        update(longer_term_base, temporary_base, OUTPUT_PATH)
+        new_knowledge_path = join(OUTPUT_PATH, NEW_KNOWLEDGE)
+        update(longer_term_base, temporary_base, '', new_knowledge_path)
 
         # check that the longer-term knowledge base has been updated
         self.assertTrue(longer_term_base.matches(temporary_base))
