@@ -50,7 +50,7 @@ class TestLearner(TestCase):
         self.assertTrue(len(new_package) > 0)
 
         # create and populate a knowledge base from the new source code
-        package_tuple = (OUTPUT_PATH, NEW_KNOWLEDGE, new_package, knowledge)
+        package_tuple = (OUTPUT_PATH, NEW_KNOWLEDGE, new_package, KNOWLEDGE)
         package_path = '.'.join(package_tuple)
         knowledge_base2 = import_module(package_path + '.knowledge_base')
         populator2 = import_module(package_path + '.knowledge_base_populator')
