@@ -6,22 +6,7 @@ class NaiveConversationStrategy:
         pass
 
     @staticmethod
-    def construct_move(context, source_path):
-        if not context:
-            return NaiveConversationStrategy._didnt_understand()
-        '''
-        TODO: maybe now that expectations are stored separately,
-        this can be simpler
-        '''
-        for i in range(len(context['expectations'])):
-            element = context['expectations'][i]
-            if element.is_expectation():
-                del context['expectations'][i]
-                return element.content
-        return NaiveConversationStrategy._didnt_understand()
-
-    @staticmethod
-    def construct_move(context, source_path): # TODO: Need a parameter to hold the longer-term knowledge base
+    def construct_move(context, source_path, longer_term_knowledge_base):
         if not context:
             return NaiveConversationStrategy._didnt_understand()
         if len(context['expectations']) > 0:
