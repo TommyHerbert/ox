@@ -14,10 +14,20 @@ class NaiveConversationStrategy:
             del context['expectations'][0]
             return content
         if len(context['propositions']) > 0:
-            pass # TODO: how is it stored and how is it needed?
-            # TODO: compare the proposition's content to the knowledge base in the context
-            # TODO: if it's there, select AlreadyKnow
-            # TODO: if not, learn the relation and select ThanksForTellingMe
+            content = context['propositions'][0].content
+            del context['propositions'][0]
+            # TODO: I need a stack class so the calling code doesn't
+            #       mess about with duplicated popping logic
+
+            # So now I have a logical tree which should be resolved
+            # in the same way that the reasoner resolves expectation
+            # trees. Maybe I should ask the reasoner to do so? But
+            # first I should take a copy of the knowledge base in
+            # the context so I can see if the resolution made a
+            # difference.
+
+            # TODO: if the knowledge base changes, select ThanksForTellingMe and notify the Learner
+            # TODO: if not, select AlreadyKnow
         return NaiveConversationStrategy._didnt_understand()
 
     @staticmethod
