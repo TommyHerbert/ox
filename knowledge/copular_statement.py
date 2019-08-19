@@ -2,7 +2,7 @@ from knowledge.concept import Thing
 from knowledge.statement import Statement
 import re
 from functools import partial
-from knowledge.logical_tree import LogicalTreeBranch
+from knowledge.logical_tree import LogicalTreeBranch, LogicalTreeLeaf
 from utils.case import phrase_to_headline
 
 
@@ -14,12 +14,12 @@ class CopularStatement(Statement):
         arguments = self.get_arguments(input_string)
         if not arguments:
             return None
+        instance_name_leaf = LogicalTreeLeaf(arguments[0])
         category_leaf = reader.parse(arguments[1], knowledge_base)
         if not category_leaf:
             return None
         copular = partial(self.add_belief, knowledge_base)
-        category = category_leaf.content
-        return LogicalTreeBranch(copular, [arguments[0], category])
+        return LogicalTreeBranch(copular, [instance_name_leaf, category_leaf])
 
     @staticmethod
     def get_arguments(input_string):
