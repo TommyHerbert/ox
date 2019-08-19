@@ -9,7 +9,7 @@ class NaiveConversationStrategy:
         self.knowledge_base = knowledge_base
         self.reasoner = reasoner
 
-    def construct_move(context, source_path):
+    def construct_move(self, context, source_path):
         if not context:
             return DidntUnderstand().get_logical_form()
         if len(context['expectations']) > 0:
