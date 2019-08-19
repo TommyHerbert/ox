@@ -7,6 +7,7 @@ from knowledge.adele import Adele
 from knowledge.hello import Hello
 from knowledge.someone_like_you import SomeoneLikeYou
 from knowledge.relation import Relation
+from knowledge.copular_statement import CopularStatement
 
 
 # TODO: why have this class? populate should be a top-level function
@@ -17,6 +18,7 @@ class KnowledgeBasePopulator:
         song = Song()
         compound_noun = CompoundNoun()
         favourite_question = FavouriteQuestion()
+        copular_statement = CopularStatement()
 
         # instantiate things
         myself = Myself()
@@ -29,6 +31,7 @@ class KnowledgeBasePopulator:
         knowledge_base.categories.append(song)
         knowledge_base.categories.append(compound_noun)
         knowledge_base.categories.append(favourite_question)
+        knowledge_base.categories.append(copular_statement)
 
         # populate things
         knowledge_base.add_thing(myself)
