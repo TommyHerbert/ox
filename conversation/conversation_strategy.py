@@ -1,5 +1,5 @@
 from knowledge.didnt_understand import DidntUnderstand
-from knowledge.didnt_understand import DidntUnderstand
+from knowledge.thanks_for_telling_me import ThanksForTellingMe
 from knowledge.already_know import AlreadyKnow
 from conversation import learner
 
@@ -25,9 +25,11 @@ class NaiveConversationStrategy:
             temporary_base = context['knowledge_base'].copy()
             self.reasoner.resolve(content)
             if temporary_base.matches(context['knowledge_base']):
-                learner.update(self.knowledge_base, context['knowledge_base'], source_path)
-                return ThanksForTellingMe().get_logical_form()
-            else:
                 return AlreadyKnow().get_logical_form()
+            else:
+                learner.update(self.knowledge_base,
+                               context['knowledge_base'],
+                               source_path)
+                return ThanksForTellingMe().get_logical_form()
         return DidntUnderstand().get_logical_form()
 
