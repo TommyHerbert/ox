@@ -87,13 +87,15 @@ class KnowledgeBase:
             self.things.append(thing)
 
     def add_things(self, things):
-        self.things += [t for t in things]
+        self.things += [t for t in things if t not in self.things]
 
     def add_relation(self, name, arguments):
-        self.relations.append(Relation(name, arguments))
+        relation = Relation(name, arguments)
+        if relation not in self.relations:
+            self.relations.append(relation)
 
     def add_relations(self, relations):
-        self.relations += [r for r in relations]
+        self.relations += [r for r in relations if r not in self.relations]
 
     def merge(self, other):
         merged = KnowledgeBase()
