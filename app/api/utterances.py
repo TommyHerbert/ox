@@ -6,6 +6,10 @@ from conversation.mind import Mind
 from app.models import Conversation, Utterance
 
 
+# TODO: test this then factor out logic shared with
+# routes. It might be that Mind should be asked if the contents have
+# changed, then the new code (in operations?) should call
+# sqlalchemy.orm.attributes.flag_modified(conversation, context)
 @bp.route('/utterances', methods=['POST'])
 @token_auth.login_required
 def post_utterance():
