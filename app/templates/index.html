@@ -10,8 +10,12 @@
         <p><a href="{{ url_for('browser_auth.sign_out') }}">Sign out</a></p>
     </div>
     <hr>
-    {% for utterance in utterances %}
-        <p>{{ utterance.speaker.email }}: {{ utterance.text }}</p>
-    {% endfor %}
-    {{ wtf.quick_form(form) }}
+    <div class="overflow-auto">
+        {% for utterance in utterances %}
+            <p>{{ utterance.speaker.email }}: {{ utterance.text }}</p>
+        {% endfor %}
+    </div>
+    <div>
+        {{ wtf.quick_form(form) }}
+    </div>
 {% endblock %}
