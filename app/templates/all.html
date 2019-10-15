@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     <p>conversation history for {{ current_user.email }}</p>
     {% for conversation in conversations %}
         <p>

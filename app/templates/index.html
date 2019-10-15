@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block content %}
+{% block app_content %}
     <div>
         <p>logged in as {{ current_user.email }}</p>
         <p><a href="{{ url_for('browser_main.new') }}">Start a new conversation</a></p>
@@ -12,13 +13,5 @@
     {% for utterance in utterances %}
         <p>{{ utterance.speaker.email }}: {{ utterance.text }}</p>
     {% endfor %}
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.text(cols=32, rows=4) }} {{form.send}}<br>
-            {% for error in form.text.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-    </form>
+    {{ wtf.quick_form(form) }}
 {% endblock %}

@@ -3,11 +3,13 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_bootstrap import Bootstrap
 
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 login.login_view = 'browser_auth.sign_in'
+bootstrap = Bootstrap()
 
 
 def create_app(config_class=Config):
@@ -16,6 +18,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
+    bootstrap.init_app(app)
 
     from app.browser_auth import bp as browser_auth_bp
     app.register_blueprint(browser_auth_bp, url_prefix='/auth')
