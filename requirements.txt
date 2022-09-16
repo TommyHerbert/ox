@@ -30,7 +30,7 @@ netifaces==0.10.7
 oslo.concurrency==3.28.1
 oslo.config==6.6.2
 oslo.i18n==3.22.1
-oslo.utils==3.37.1
+oslo.utils==4.10.1
 pathlib2==2.3.2
 pbr==5.1.0
 pkg-resources==0.0.0
